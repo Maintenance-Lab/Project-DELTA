@@ -1,0 +1,885 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Serverkar DELTA</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: technical drawing sheet — title block on top, numbered sheets (bladen) stacked, each a framed drawing with notes */
+:root{
+  --paper:#f3f5f6; --sheet:#ffffff; --ink:#18212b; --muted:#5a6672; --rule:#c7d0d8; --frame:#8a98a6;
+  --accent:#0d5c9e;
+  --w-l:#8b4a1c; --w-n:#2563c9; --w-pe:#2f8f3a; --w-pey:#d9b21a;
+  --w-p48:#c62828; --w-m48:#1b4fa8; --w-12:#d97706; --w-5:#0f8a7e; --w-sig:#7a3fd1; --w-ader:#18212b;
+  --mod:#e9edf1; --modr:#f6d4d2; --modb:#d3e0f6; --modg:#e1e4e8; --modpe:#dcefcf; --railc:#b9c3cc;
+  --note:#fff7e0; --notebd:#e6c766;
+ --plate:#e6ebf0; --duct:#cfd6dd; --psu:#d7e5f3; --v230:#f4d4cf; --dcc:#e3dcf2; --fuse:#2a3440; --pe:#d9e8a8; --red:#d9534f; --blue:#3b78c2; --grey:#9aa4ae; --pcb:#cfe8d6; --endc:#7d8792;
+  --ok:#2e7d4f; --wn:#b26a00; --bad:#b3261e; --cold:#cfe3f7; --coldline:#2f6fb3; --hot:#f8dccf; --hotline:#c4502a; --crah:#dfe7d0;
+  --display:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0f1419; --sheet:#161d24; --ink:#e3e9ef; --muted:#9aa7b4; --rule:#2c3946; --frame:#4f6070;
+  --accent:#6fb0ee;
+  --w-l:#c98a5a; --w-n:#6c9cf0; --w-pe:#5cc46a; --w-pey:#e8c84a;
+  --w-p48:#ff6b6b; --w-m48:#6f9ef5; --w-12:#f5a524; --w-5:#3cc7b8; --w-sig:#b48cf7; --w-ader:#e3e9ef;
+  --mod:#222c36; --modr:#4a2426; --modb:#1f3354; --modg:#2c333b; --modpe:#25402a; --railc:#3b4855;
+  --note:#2d2714; --notebd:#7a6625;
+ --plate:#232c36; --duct:#36424e; --psu:#24405c; --v230:#5a2d29; --dcc:#3a3157; --fuse:#c8d1da; --pe:#4c5a24; --red:#e06b67; --blue:#5f97d8; --grey:#7c8792; --pcb:#24493a; --endc:#8d97a2;
+  --ok:#5cc28a; --wn:#e3a33c; --bad:#f2827a; --cold:#1d3550; --coldline:#7fb3ea; --hot:#4a2a20; --hotline:#ef8a63; --crah:#2f3a24;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0f1419; --sheet:#161d24; --ink:#e3e9ef; --muted:#9aa7b4; --rule:#2c3946; --frame:#4f6070;
+  --accent:#6fb0ee;
+  --w-l:#c98a5a; --w-n:#6c9cf0; --w-pe:#5cc46a; --w-pey:#e8c84a;
+  --w-p48:#ff6b6b; --w-m48:#6f9ef5; --w-12:#f5a524; --w-5:#3cc7b8; --w-sig:#b48cf7; --w-ader:#e3e9ef;
+  --mod:#222c36; --modr:#4a2426; --modb:#1f3354; --modg:#2c333b; --modpe:#25402a; --railc:#3b4855;
+  --note:#2d2714; --notebd:#7a6625;
+ --plate:#232c36; --duct:#36424e; --psu:#24405c; --v230:#5a2d29; --dcc:#3a3157; --fuse:#c8d1da; --pe:#4c5a24; --red:#e06b67; --blue:#5f97d8; --grey:#7c8792; --pcb:#24493a; --endc:#8d97a2;
+  --ok:#5cc28a; --wn:#e3a33c; --bad:#f2827a; --cold:#1d3550; --coldline:#7fb3ea; --hot:#4a2a20; --hotline:#ef8a63; --crah:#2f3a24;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 48px}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+h1{font-size:clamp(24px,3.2vw,32px);font-weight:700;letter-spacing:-.01em}
+h2{font-size:20px;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0;max-width:72ch}
+.mono{font-family:var(--mono)}
+/* title block */
+.tb{display:grid;grid-template-columns:2fr repeat(4,1fr);border:1.5px solid var(--frame);background:var(--sheet)}
+.tb > div{padding:10px 12px;border-left:1px solid var(--rule);min-width:0}
+.tb > div:first-child{border-left:0}
+.tb .k{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tb .v{font-family:var(--mono);font-size:14px;font-weight:500}
+@media (max-width:760px){.tb{grid-template-columns:1fr 1fr}.tb>div{border-left:0;border-top:1px solid var(--rule)}.tb>div:first-child{grid-column:1/-1;border-top:0}}
+.intro{display:grid;grid-template-columns:1.4fr 1fr;gap:22px;align-items:start}
+@media (max-width:860px){.intro{grid-template-columns:1fr}}
+.intro > *{min-width:0}
+.warn{background:var(--note);border:1px solid var(--notebd);padding:12px 14px}
+.warn h3{margin-bottom:6px}
+.warn ul{margin:0;padding-left:18px}
+/* legend */
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px}
+.legend span{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.legend svg{width:34px;height:10px;flex:none}
+/* sheets */
+.sheet{background:var(--sheet);border:1.5px solid var(--frame);display:flex;flex-direction:column}
+.sheet-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 16px;border-bottom:1px solid var(--rule);flex-wrap:wrap}
+.sheet-h .no{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.sheet-b{padding:14px 16px;display:flex;flex-direction:column;gap:14px}
+.draw{overflow-x:auto;border:1px dashed var(--rule);padding:8px;background:var(--sheet)}
+.draw svg{display:block;width:100%;min-width:var(--minw,760px);height:auto}
+.notes{font-size:14px;color:var(--ink)}
+.notes ul,.notes ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.cols{grid-template-columns:1fr}}
+.cols > *{min-width:0}
+/* tables */
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums}
+th,td{border:1px solid var(--rule);padding:6px 9px;text-align:left;vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--paper)}
+td.mono,td .mono{font-family:var(--mono);font-size:13px}
+.chip{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px;border:1px solid var(--frame)}
+/* svg styles */
+svg text{font-family:var(--mono);fill:var(--ink)}
+.bx{fill:var(--sheet);stroke:var(--ink);stroke-width:1.4}
+.bx2{fill:var(--mod);stroke:var(--ink);stroke-width:1.4}
+.bxr{fill:var(--modr);stroke:var(--ink);stroke-width:1.4}
+.bxb{fill:var(--modb);stroke:var(--ink);stroke-width:1.4}
+.bxg{fill:var(--modg);stroke:var(--ink);stroke-width:1.4}
+.bxpe{fill:var(--modpe);stroke:var(--ink);stroke-width:1.4}
+.zone{fill:none;stroke:var(--frame);stroke-width:1.2;stroke-dasharray:6 5}
+.tt{font-size:13px;font-weight:600}
+.ts{font-size:11.5px;fill:var(--muted)}
+.tw{font-size:11px;font-weight:500}
+.mt{font-size:10.5px;font-weight:600}
+.lt{font-size:11px}
+.w{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.wl{stroke:var(--w-l)} .wn{stroke:var(--w-n)} .wpe{stroke:var(--w-pe)} .wpey{stroke:var(--w-pey);stroke-dasharray:6 6}
+.wp48{stroke:var(--w-p48);stroke-width:3.4} .wm48{stroke:var(--w-m48);stroke-width:3.4}
+.wp48t{stroke:var(--w-p48)} .wm48t{stroke:var(--w-m48)}
+.w12p{stroke:var(--w-12)} .w12m{stroke:var(--w-12);stroke-dasharray:7 4}
+.w5{stroke:var(--w-5)} .wsig{stroke:var(--w-sig);stroke-width:2}
+.wad{stroke:var(--w-ader)}
+.dot{stroke:none}
+.dp48{fill:var(--w-p48)} .dm48{fill:var(--w-m48)} .dsig{fill:var(--w-sig)} .dad{fill:var(--w-ader)}
+.comp{fill:var(--sheet);stroke:var(--ink);stroke-width:1.6}
+.compf{fill:var(--ink);stroke:var(--ink);stroke-width:1.2}
+.ln{fill:none;stroke:var(--ink);stroke-width:1.6}
+.air{fill:none;stroke:var(--accent);stroke-width:2;marker-end:url(#arr)}
+.rail{fill:var(--railc)} .es{fill:var(--frame)} .plate{fill:var(--frame)}
+.modline{stroke:var(--ink);stroke-width:1}
+.brk{fill:none;stroke:var(--muted);stroke-width:1}
+.strip{fill:var(--modg);stroke:var(--ink);stroke-width:1.2}
+.coil{fill:none;stroke:var(--w-p48);stroke-width:1.6}
+.foot{font-size:12.5px;color:var(--muted)}
+
+/* montageplaat */
+.m-plate{fill:var(--plate);stroke:var(--ink);stroke-width:1}
+.m-duct{fill:var(--duct);stroke:var(--rule);stroke-width:.5}
+.m-rail{fill:var(--railc);opacity:.6}
+.m-psu{fill:var(--psu);stroke:var(--ink);stroke-width:.5}
+.m-v230{fill:var(--v230);stroke:var(--ink);stroke-width:.5}
+.m-dc{fill:var(--dcc);stroke:var(--ink);stroke-width:.5}
+.m-fuse{fill:var(--fuse);stroke:var(--sheet);stroke-width:.4}
+.m-pe{fill:var(--pe);stroke:var(--ink);stroke-width:.4}
+.m-prd{fill:var(--red);stroke:var(--ink);stroke-width:.4}
+.m-pbu{fill:var(--blue);stroke:var(--ink);stroke-width:.4}
+.m-pgy{fill:var(--grey);stroke:var(--ink);stroke-width:.4}
+.m-pcb{fill:var(--pcb);stroke:var(--ink);stroke-width:.5;stroke-dasharray:3 2}
+.m-end{fill:var(--endc)}
+svg text.m-lbl{fill:var(--ink);font-weight:500}
+svg text.m-sub,svg text.m-dimt{fill:var(--muted)}
+svg text.m-col{fill:var(--accent);font-family:var(--body);font-weight:600}
+.m-dim{stroke:var(--muted);stroke-width:.7}
+.lg{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--muted)}
+.lg span{display:inline-flex;align-items:center;gap:6px}
+.lg i{width:14px;height:10px;display:inline-block;border:1px solid var(--rule)}
+td.n{text-align:right;font-family:var(--mono)}
+tr.sum td{font-weight:600;border-bottom:2px solid var(--ink)}
+.pill{font-family:var(--mono);font-size:11.5px;font-weight:600;padding:1px 7px;border-radius:3px;border:1px solid currentColor;white-space:nowrap}
+.pill.ok{color:var(--ok)} .pill.bad{color:var(--bad)} .pill.info{color:var(--wn)}
+/* invoer */
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px 16px}
+.ctrl label{display:grid;gap:3px;font-size:12.5px;color:var(--muted)}
+.ctrl input,.ctrl select{font:inherit;font-family:var(--mono);font-size:14px;padding:5px 7px;border:1px solid var(--rule);border-radius:3px;background:var(--sheet);color:var(--ink);min-width:0}
+.ctrl input:focus-visible,.ctrl select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.checks{display:grid;gap:6px;margin:0;padding:0;list-style:none;font-size:14px}
+.checks li{display:flex;gap:10px;align-items:baseline}
+/* bovenaanzicht + bakje */
+.k-cart{fill:none;stroke:var(--ink);stroke-width:4}
+.k-hood{fill:none;stroke:var(--accent);stroke-width:3;stroke-dasharray:18 10}
+.k-cold{fill:var(--cold);stroke:var(--coldline);stroke-width:2}
+.k-hot{fill:var(--hot)}
+.k-crah{fill:var(--crah);stroke:var(--ink);stroke-width:2}
+.k-rack{fill:var(--sheet);stroke:var(--ink);stroke-width:3}
+.k-bak{fill:var(--psu);stroke:var(--ink);stroke-width:1.2}
+.k-door{stroke:var(--accent);stroke-width:12}
+.k-fan{fill:none;stroke:var(--ink);stroke-width:2}
+.k-ac{stroke:var(--coldline);stroke-width:5;fill:none}
+.k-ah{stroke:var(--hotline);stroke-width:5;fill:none}
+svg text.k-t{fill:var(--ink);font-size:30px}
+svg text.k-s{fill:var(--muted);font-size:24px}
+svg text.k-c{fill:var(--coldline);font-family:var(--body);font-weight:600;font-size:30px}
+svg text.k-h{fill:var(--hotline);font-family:var(--body);font-weight:600;font-size:30px}
+.b-box{fill:var(--sheet);stroke:var(--ink);stroke-width:2}
+.b-fan{fill:var(--mod);stroke:var(--ink);stroke-width:1.5}
+.b-strip{fill:var(--modg);stroke:var(--ink);stroke-width:1.5}
+.b-coil{fill:none;stroke:var(--w-p48);stroke-width:1.6}
+.b-kl{fill:var(--mod);stroke:var(--ink);stroke-width:1.5}
+.b-ac{stroke:var(--coldline);stroke-width:3;fill:none}
+.b-ah{stroke:var(--hotline);stroke-width:3;fill:none}
+.b-dim{stroke:var(--muted);stroke-width:1}
+svg text.b-t{font-size:15px;fill:var(--ink)}
+svg text.b-s{font-size:13px;fill:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+
+<div class="wrap">
+
+  <header class="tb" aria-label="Titelblok">
+    <div><div class="k">Tekeningenset</div><h1>Serverkar DELTA</h1></div>
+    <div><div class="k">Project</div><div class="v">DELTA · HvA</div></div>
+    <div><div class="k">Fase</div><div class="v">1 → 3 · 10–30 bakjes</div></div>
+    <div><div class="k">Voeding</div><div class="v">1–3× SDR-960-48</div></div>
+    <div><div class="k">Versie</div><div class="v">04-11-2026</div></div>
+  </header>
+
+  <section class="intro">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <p>Dit schema hoort bij de BOM van fase 1. Het laat zien hoe de serverkar wordt aangesloten: van de wandcontactdoos via de 48 V-voeding naar tien warmtelastbakjes met elk een NiCr-spoel en een 12 V-ventilator, aangestuurd door één ESP32 met tien MOSFET's.</p>
+      <p>Blad 1 geeft het overzicht. Blad 2 en 3 werken de bedrading van fase 1 uit. Blad 4 is het bakje, blad 5 hoe een bakje in het rek schuift, vastzit en afdicht, blad 6 de montageplaat voor 3 kW (Rittal AX 1094.000) en blad 7 het bovenaanzicht van de kar met CRAH's en de binnenbox. Blad 4 en 7 rekenen mee als je maten aanpast. Achteraan staan de kanaaltabel, de draadlijst en de stappen voor de eerste keer inschakelen.</p>
+      <div class="legend" aria-label="Legenda draadkleuren">
+        <span><svg viewBox="0 0 34 10"><line x1="2" y1="5" x2="32" y2="5" class="w wl"/></svg>230 V fase (L)</span>
+        <span><svg viewBox="0 0 34 10"><line x1="2" y1="5" x2="32" y2="5" class="w wn"/></svg>230 V nul (N)</span>
+        <span><svg viewBox="0 0 34 10"><line x1="2" y1="5" x2="32" y2="5" class="w wpe"/><line x1="2" y1="5" x2="32" y2="5" class="w wpey"/></svg>aarde (PE)</span>
+        <span><svg viewBox="0 0 34 10"><line x1="2" y1="5" x2="32" y2="5" class="w wp48"/></svg>+48 V</span>
+        <span><svg viewBox="0 0 34 10"><line x1="2" y1="5" x2="32" y2="5" class="w wm48"/></svg>−48 V / GND</span>
+        <span><svg viewBox="0 0 34 10"><line x1="2" y1="5" x2="32" y2="5" class="w w12p"/></svg>+12 V</span>
+        <span><svg viewBox="0 0 34 10"><line x1="2" y1="5" x2="32" y2="5" class="w w12m"/></svg>−12 V</span>
+        <span><svg viewBox="0 0 34 10"><line x1="2" y1="5" x2="32" y2="5" class="w w5"/></svg>5 V</span>
+        <span><svg viewBox="0 0 34 10"><line x1="2" y1="5" x2="32" y2="5" class="w wsig"/></svg>PWM-signaal</span>
+        <span><svg viewBox="0 0 34 10"><line x1="2" y1="5" x2="32" y2="5" class="w wad"/></svg>spoel − (geschakeld)</span>
+      </div>
+    </div>
+    <aside class="warn">
+      <h3>Voor je begint</h3>
+      <ul>
+        <li>De 230 V-kant (netsnoer, Q1, aarde, ingang G1) wordt aangesloten en gekeurd door een bevoegd persoon (NEN 3140).</li>
+        <li>Werk alleen spanningsloos: stekker uit het stopcontact.</li>
+        <li>Fijndradige draad altijd met adereindhuls in een push-in-klem.</li>
+        <li>NiCr-draad nooit solderen: klemmen in de porseleinen busklem, uiteinde 3–4× dubbelgevouwen.</li>
+      </ul>
+    </aside>
+  </section>
+
+  <!-- BLAD 1 -->
+  <section class="sheet" id="overzicht">
+    <div class="sheet-h"><h2>Overzicht</h2><span class="no">Blad 1 / 7</span></div>
+    <div class="sheet-b">
+      <div class="draw" style="--minw:900px">
+        <svg viewBox="0 0 1220 560" role="img" aria-labelledby="ovT">
+          <title id="ovT">Blokschema van 230 V naar 48 V, zekeringen, bakjes, DC-DC-converters en MOSFET-print</title>
+          <!-- 230 V -->
+          <rect x="20" y="50" width="130" height="60" class="bx"/>
+          <text x="85" y="76" class="tt" text-anchor="middle">Stopcontact</text>
+          <text x="85" y="95" class="ts" text-anchor="middle">230 V · randaarde</text>
+          <rect x="200" y="50" width="140" height="60" class="bx"/>
+          <text x="270" y="76" class="tt" text-anchor="middle">Q1 aardlek</text>
+          <text x="270" y="95" class="ts" text-anchor="middle">C16 · 30 mA · A</text>
+          <rect x="200" y="140" width="140" height="40" class="bxpe"/>
+          <text x="270" y="165" class="tt" text-anchor="middle">X0 aarde PE</text>
+          <rect x="390" y="40" width="170" height="140" class="bx2"/>
+          <text x="475" y="84" class="tt" text-anchor="middle">G1 SDR-960-48</text>
+          <text x="475" y="106" class="ts" text-anchor="middle">230 V AC → 48 V DC</text>
+          <text x="475" y="126" class="ts" text-anchor="middle">max 20 A</text>
+          <path d="M150 70 H200 M340 70 H390" class="w wl"/>
+          <path d="M150 95 H200 M340 95 H390" class="w wn"/>
+          <path d="M85 110 V160 H200 M340 160 H390" class="w wpe"/>
+          <path d="M85 110 V160 H200 M340 160 H390" class="w wpey"/>
+          <text x="175" y="64" class="tw" text-anchor="middle">L</text>
+          <text x="175" y="89" class="tw" text-anchor="middle">N</text>
+          <text x="365" y="64" class="tw" text-anchor="middle">L</text>
+          <text x="365" y="89" class="tw" text-anchor="middle">N</text>
+          <text x="365" y="154" class="tw" text-anchor="middle">PE</text>
+          <text x="120" y="154" class="tw" text-anchor="middle">PE</text>
+          <!-- 48 V PTFIX -->
+          <rect x="600" y="50" width="150" height="40" class="bxr"/>
+          <text x="675" y="75" class="tt" text-anchor="middle">X1 +48 V</text>
+          <rect x="600" y="140" width="150" height="40" class="bxb"/>
+          <text x="675" y="165" class="tt" text-anchor="middle">X2 −48 V</text>
+          <path d="M560 70 H600" class="w wp48"/>
+          <path d="M560 160 H600" class="w wm48"/>
+          <text x="580" y="62" class="tw" text-anchor="middle">+V</text>
+          <text x="580" y="152" class="tw" text-anchor="middle">−V</text>
+          <!-- bus -->
+          <path d="M750 70 H785 V390 M785 270 H810 M785 390 H810 M785 70 H810" class="w wp48t"/>
+          <circle cx="785" cy="70" r="4" class="dot dp48"/><circle cx="785" cy="270" r="4" class="dot dp48"/>
+          <!-- fuses -->
+          <rect x="810" y="50" width="150" height="40" class="bx"/>
+          <text x="885" y="67" class="tt" text-anchor="middle">F1–F10</text>
+          <text x="885" y="83" class="ts" text-anchor="middle">10× T3,15 A</text>
+          <rect x="810" y="250" width="150" height="40" class="bx"/>
+          <text x="885" y="267" class="tt" text-anchor="middle">F12 · T2 A</text>
+          <text x="885" y="283" class="ts" text-anchor="middle">voor G3</text>
+          <rect x="810" y="370" width="150" height="40" class="bx"/>
+          <text x="885" y="387" class="tt" text-anchor="middle">F11 · T2 A</text>
+          <text x="885" y="403" class="ts" text-anchor="middle">voor G2 + print</text>
+          <!-- bakje -->
+          <rect x="1010" y="30" width="180" height="150" class="zone"/>
+          <text x="1100" y="62" class="tt" text-anchor="middle">Bakje 1–10</text>
+          <text x="1100" y="86" class="ts" text-anchor="middle">spoel NiCr ≈ 23 Ω</text>
+          <text x="1100" y="106" class="ts" text-anchor="middle">ventilator 12 V</text>
+          <text x="1100" y="126" class="ts" text-anchor="middle">1 kabel 5G1 per bakje</text>
+          <path d="M960 70 H1010" class="w wp48t"/>
+          <text x="985" y="62" class="tw" text-anchor="middle">ader 1</text>
+          <!-- 12 V -->
+          <rect x="1010" y="200" width="180" height="36" class="bxg"/>
+          <text x="1100" y="223" class="tt" text-anchor="middle">X3 / X4 ±12 V</text>
+          <rect x="1010" y="250" width="180" height="50" class="bx2"/>
+          <text x="1100" y="271" class="tt" text-anchor="middle">G3 DDR-30L-12</text>
+          <text x="1100" y="289" class="ts" text-anchor="middle">48 → 12 V</text>
+          <path d="M960 270 H1010" class="w wp48t"/>
+          <path d="M1060 250 V236 M1060 200 V180" class="w w12p"/>
+          <path d="M1140 250 V236 M1140 200 V180" class="w w12m"/>
+          <text x="1072" y="194" class="tw">3</text>
+          <text x="1152" y="194" class="tw">4</text>
+          <!-- spoel min -->
+          <path d="M1190 110 H1205 V500 H720" class="w wad"/>
+          <text x="1100" y="493" class="tw" text-anchor="middle">ader 2 · spoel − (10×)</text>
+          <!-- G2 -->
+          <rect x="810" y="440" width="150" height="46" class="bx2"/>
+          <text x="885" y="459" class="tt" text-anchor="middle">G2 DDR-15L-05</text>
+          <text x="885" y="477" class="ts" text-anchor="middle">48 → 5 V</text>
+          <path d="M885 410 V440" class="w wp48t"/>
+          <path d="M885 425 H720" class="w wp48t"/>
+          <circle cx="885" cy="425" r="4" class="dot dp48"/>
+          <text x="790" y="419" class="tw" text-anchor="middle">+48 ref</text>
+          <path d="M810 463 H720" class="w w5"/>
+          <text x="765" y="457" class="tw" text-anchor="middle">5 V</text>
+          <!-- print -->
+          <rect x="380" y="420" width="340" height="120" class="bx"/>
+          <text x="550" y="452" class="tt" text-anchor="middle">MOSFET-print</text>
+          <text x="550" y="474" class="ts" text-anchor="middle">ESP32 · 10× IRL540N · 10× UF4007</text>
+          <text x="550" y="494" class="ts" text-anchor="middle">GPIO → 100 Ω → gate (blad 3)</text>
+          <path d="M675 180 V420" class="w wm48"/>
+          <text x="685" y="300" class="tw">GND (2 draden)</text>
+          <text x="380" y="250" class="ts">Alle −48 V-ingangen (G2, G3, print)</text>
+          <text x="380" y="266" class="ts">gaan naar X2.</text>
+        </svg>
+      </div>
+      <div class="notes">
+        <ul>
+          <li><b>Stroomrichting:</b> de +48 V gaat via een eigen zekering (F1–F10) en ader 1 naar de spoel. De spoel komt terug via ader 2 op de MOSFET-print. Die schakelt de min, dus de MOSFET zit aan de min-kant.</li>
+          <li><b>Ventilatoren draaien altijd</b> zodra de kar aan staat: G3 hangt direct aan de 48 V. Er is geen PWM op de ventilatoren.</li>
+          <li><b>G2 en G3 zijn geïsoleerd.</b> De 0 V van G2 wordt op de print aan de GND-bus (−48 V) gekoppeld, anders werkt het gate-signaal niet. De −12 V van G3 blijft los op X4.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLAD 2 -->
+  <section class="sheet" id="rail">
+    <div class="sheet-h"><h2>Railindeling en 230 V-zijde</h2><span class="no">Blad 2 / 7</span></div>
+    <div class="sheet-b">
+      <div class="draw" style="--minw:760px"><svg viewBox="0 0 847 160" role="img" aria-labelledby="railT"><title id="railT">Volgorde van de componenten op de DIN-rail</title><rect x="10" y="92" width="827" height="16" class="rail"/><rect x="20" y="62" width="8" height="30" class="es"/><rect x="28" y="38" width="40" height="54" rx="2" fill="var(--mod)" class="modline"/><text x="48.0" y="69.0" class="mt" text-anchor="middle">Q1</text><rect x="74" y="28" width="200" height="64" rx="2" fill="var(--mod)" class="modline"/><text x="174.0" y="64.0" class="mt" text-anchor="middle">G1 SDR-960-48</text><rect x="280" y="52" width="56" height="40" rx="2" fill="var(--modr)" class="modline"/><text x="308.0" y="76.0" class="mt" text-anchor="middle">X1</text><rect x="340" y="52" width="56" height="40" rx="2" fill="var(--modb)" class="modline"/><text x="368.0" y="76.0" class="mt" text-anchor="middle">X2</text><rect x="402" y="44" width="12" height="48" rx="2" fill="var(--mod)" class="modline"/><rect x="414" y="44" width="12" height="48" rx="2" fill="var(--mod)" class="modline"/><rect x="426" y="44" width="12" height="48" rx="2" fill="var(--mod)" class="modline"/><rect x="438" y="44" width="12" height="48" rx="2" fill="var(--mod)" class="modline"/><rect x="450" y="44" width="12" height="48" rx="2" fill="var(--mod)" class="modline"/><rect x="462" y="44" width="12" height="48" rx="2" fill="var(--mod)" class="modline"/><rect x="474" y="44" width="12" height="48" rx="2" fill="var(--mod)" class="modline"/><rect x="486" y="44" width="12" height="48" rx="2" fill="var(--mod)" class="modline"/><rect x="498" y="44" width="12" height="48" rx="2" fill="var(--mod)" class="modline"/><rect x="510" y="44" width="12" height="48" rx="2" fill="var(--mod)" class="modline"/><rect x="522" y="44" width="12" height="48" rx="2" fill="var(--mod)" class="modline"/><rect x="534" y="44" width="12" height="48" rx="2" fill="var(--mod)" class="modline"/><rect x="546" y="44" width="12" height="48" rx="2" fill="var(--mod)" class="modline"/><rect x="558" y="50" width="12" height="42" rx="2" fill="var(--modpe)" class="modline"/><rect x="570" y="50" width="12" height="42" rx="2" fill="var(--modpe)" class="modline"/><rect x="582" y="50" width="3" height="42" class="plate"/><rect x="585" y="62" width="8" height="30" class="es"/><rect x="613" y="38" width="40" height="54" rx="2" fill="var(--mod)" class="modline"/><text x="633.0" y="69.0" class="mt" text-anchor="middle">G2</text><rect x="657" y="38" width="40" height="54" rx="2" fill="var(--mod)" class="modline"/><text x="677.0" y="69.0" class="mt" text-anchor="middle">G3</text><rect x="703" y="52" width="56" height="40" rx="2" fill="var(--modg)" class="modline"/><text x="731.0" y="76.0" class="mt" text-anchor="middle">X3</text><rect x="763" y="52" width="56" height="40" rx="2" fill="var(--modb)" class="modline"/><text x="791.0" y="76.0" class="mt" text-anchor="middle">X4</text><rect x="819" y="62" width="8" height="30" class="es"/><path d="M28 112 V116 H68 V112" class="brk"/><line x1="48.0" y1="116" x2="48.0" y2="117" class="brk"/><text x="48.0" y="128" class="lt" text-anchor="middle">Q1 aardlek C16</text><path d="M74 112 V116 H274 V112" class="brk"/><line x1="174.0" y1="116" x2="174.0" y2="137" class="brk"/><text x="174.0" y="148" class="lt" text-anchor="middle">G1 · 48 V voeding</text><path d="M280 112 V116 H336 V112" class="brk"/><line x1="308.0" y1="116" x2="308.0" y2="117" class="brk"/><text x="308.0" y="128" class="lt" text-anchor="middle">X1 +48</text><path d="M340 112 V116 H396 V112" class="brk"/><line x1="368.0" y1="116" x2="368.0" y2="137" class="brk"/><text x="368.0" y="148" class="lt" text-anchor="middle">X2 −48</text><path d="M402 112 V116 H558 V112" class="brk"/><line x1="480.0" y1="116" x2="480.0" y2="117" class="brk"/><text x="480.0" y="128" class="lt" text-anchor="middle">F1–F13 zekeringen</text><path d="M558 112 V116 H582 V112" class="brk"/><line x1="570.0" y1="116" x2="570.0" y2="137" class="brk"/><text x="570.0" y="148" class="lt" text-anchor="middle">X0 PE</text><path d="M613 112 V116 H653 V112" class="brk"/><line x1="633.0" y1="116" x2="633.0" y2="117" class="brk"/><text x="633.0" y="128" class="lt" text-anchor="middle">G2 5 V</text><path d="M657 112 V116 H697 V112" class="brk"/><line x1="677.0" y1="116" x2="677.0" y2="137" class="brk"/><text x="677.0" y="148" class="lt" text-anchor="middle">G3 12 V</text><path d="M703 112 V116 H759 V112" class="brk"/><line x1="731.0" y1="116" x2="731.0" y2="117" class="brk"/><text x="731.0" y="128" class="lt" text-anchor="middle">X3 +12</text><path d="M763 112 V116 H819 V112" class="brk"/><line x1="791.0" y1="116" x2="791.0" y2="137" class="brk"/><text x="791.0" y="148" class="lt" text-anchor="middle">X4 −12</text></svg></div>
+      <p class="foot">Volgorde van links naar rechts, niet op schaal. De twee aardklemmen (X0) staan direct na de laatste zekeringklem, zodat één afsluitplaat D-PT 4-PE/L/HESI de hele rij afsluit. Sluit elke groep af met een eindsteun.</p>
+      <div class="cols">
+        <div class="notes">
+          <h3 style="margin-bottom:6px">230 V aansluiten (bevoegd persoon)</h3>
+          <ol>
+            <li>Netsnoer door de wartel M20, trekontlasting aandraaien.</li>
+            <li>Bruin → Q1 ingang L. Blauw → Q1 ingang N.</li>
+            <li>Groen/geel → X0 (aardklem op de rail; aardt de rail mee).</li>
+            <li>Q1 uitgang L → G1 L, Q1 uitgang N → G1 N, met 2,5 mm² bruin en blauw.</li>
+            <li>X0 → G1 aarde, met 2,5 mm² groen/geel.</li>
+          </ol>
+        </div>
+        <div class="notes">
+          <h3 style="margin-bottom:6px">48 V aansluiten</h3>
+          <ol>
+            <li>G1 +V → X1 (rood) met 4 mm² rood FLRY. G1 −V → X2 (blauw) met 4 mm² blauw FLRY.</li>
+            <li>X1 → F1 … F12 ingang met korte draadjes 1,0 mm² rood.</li>
+            <li>F12 uit → G3 +Vin. X2 → G3 −Vin. G3 +Vout → X3, G3 −Vout → X4.</li>
+            <li>F11 uit → G2 +Vin én print "+48 ref". X2 → G2 −Vin. G2 +5 V en 0 V → print.</li>
+            <li>X2 → print GND, met twee draden 1,0 mm² parallel.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLAD 3 -->
+  <section class="sheet" id="kanaal">
+    <div class="sheet-h"><h2>Eén kanaal: MOSFET-print en bakje</h2><span class="no">Blad 3 / 7</span></div>
+    <div class="sheet-b">
+      <div class="draw" style="--minw:820px">
+        <svg viewBox="0 0 900 400" role="img" aria-labelledby="chT">
+          <title id="chT">Schema van één kanaal: ESP32-pin via weerstand naar MOSFET, die de spoel in het bakje schakelt</title>
+          <rect x="10" y="10" width="520" height="380" class="zone"/>
+          <text x="22" y="32" class="ts">MOSFET-print · 1 van 10 kanalen (n = 1…10)</text>
+          <rect x="650" y="10" width="240" height="380" class="zone"/>
+          <text x="662" y="32" class="ts">Bakje n</text>
+          <text x="590" y="384" class="ts" text-anchor="middle">kabel 5G1</text>
+          <!-- ESP -->
+          <rect x="40" y="170" width="110" height="80" class="bx2"/>
+          <text x="95" y="203" class="tt" text-anchor="middle">ESP32</text>
+          <text x="95" y="224" class="ts" text-anchor="middle">GPIO n</text>
+          <path d="M95 170 V128" class="w w5"/>
+          <text x="95" y="120" class="tw" text-anchor="middle">5 V van G2</text>
+          <!-- R1 -->
+          <path d="M150 210 H200 M250 210 H330" class="w wsig"/>
+          <rect x="200" y="203" width="50" height="14" class="comp"/>
+          <text x="225" y="194" class="tw" text-anchor="middle">R1 100 Ω</text>
+          <circle cx="330" cy="210" r="4" class="dot dsig"/>
+          <!-- R2 -->
+          <path d="M330 210 V250 M330 300 V350" class="ln"/>
+          <rect x="323" y="250" width="14" height="50" class="comp"/>
+          <text x="346" y="279" class="tw">R2 10 kΩ</text>
+          <!-- MOSFET -->
+          <path d="M330 210 H370" class="w wsig"/>
+          <path d="M372 190 V230" class="ln" style="stroke-width:2.2"/>
+          <path d="M382 186 V199 M382 204 V216 M382 221 V234" class="ln" style="stroke-width:2.2"/>
+          <path d="M382 192 H420 V120" class="ln"/>
+          <path d="M382 228 H420 V350" class="ln"/>
+          <path d="M382 210 H400" class="ln"/>
+          <path d="M392 205 L382 210 L392 215" class="ln"/>
+          <path d="M400 210 V228" class="ln"/>
+          <text x="436" y="206" class="tt">Q IRL540N</text>
+          <text x="436" y="224" class="ts">D / S</text>
+          <text x="356" y="186" class="tw" text-anchor="middle">G</text>
+          <!-- GND bus -->
+          <path d="M95 250 V350 H500" class="w wm48"/>
+          <circle cx="330" cy="350" r="4" class="dot dm48"/><circle cx="420" cy="350" r="4" class="dot dm48"/>
+          <rect x="500" y="343" width="14" height="14" class="bxb"/>
+          <text x="300" y="372" class="tw" text-anchor="middle">GND-bus → X2 (−48 V), 2 draden</text>
+          <!-- drain -->
+          <circle cx="420" cy="120" r="4" class="dot dad"/>
+          <path d="M420 120 H500" class="w wad"/>
+          <circle cx="460" cy="120" r="4" class="dot dad"/>
+          <!-- diode -->
+          <path d="M460 120 V100" class="ln"/>
+          <polygon points="451,100 469,100 460,86" class="compf"/>
+          <path d="M450 85 H470" class="ln" style="stroke-width:2.2"/>
+          <path d="M460 85 V60 H500" class="w wp48t"/>
+          <text x="446" y="100" class="tw" text-anchor="end">UF4007</text>
+                    <rect x="500" y="53" width="14" height="14" class="bxr"/>
+          <text x="494" y="50" class="tw" text-anchor="end">+48 ref</text>
+          <rect x="500" y="113" width="14" height="14" class="bx"/>
+          <text x="507" y="105" class="tw" text-anchor="middle">Dn</text>
+          <!-- ader 2 -->
+          <path d="M514 120 H760 V110" class="w wad"/>
+          <text x="590" y="113" class="tw" text-anchor="middle">ader 2</text>
+          <!-- ader 1 -->
+          <path d="M545 40 H760 V55" class="w wp48t"/>
+          <text x="590" y="33" class="tw" text-anchor="middle">ader 1 · Fn</text>
+          <!-- spoel -->
+          <rect x="750" y="55" width="20" height="55" class="comp"/>
+          <path d="M752 62 L768 68 L752 74 L768 80 L752 86 L768 92 L752 98 L768 104" class="coil"/>
+          <text x="780" y="78" class="tt">spoel</text>
+          <text x="780" y="96" class="ts">NiCr ≈ 23 Ω</text>
+          <text x="662" y="160" class="ts">via porseleinen busklem</text>
+          <text x="662" y="176" class="ts">+ siliconendraad</text>
+          <!-- fan -->
+          <circle cx="770" cy="280" r="22" class="comp"/>
+          <text x="770" y="285" class="tt" text-anchor="middle">M</text>
+          <path d="M545 265 H754" class="w w12p"/>
+          <path d="M545 295 H754" class="w w12m"/>
+          <text x="590" y="258" class="tw" text-anchor="middle">ader 3 · +12</text>
+          <text x="590" y="315" class="tw" text-anchor="middle">ader 4 · −12</text>
+          <text x="800" y="276" class="tt">ventilator</text>
+          <text x="800" y="294" class="ts">12 V</text>
+          <!-- PE -->
+          <path d="M545 350 H700" class="w wpe"/><path d="M545 350 H700" class="w wpey"/>
+          <text x="590" y="343" class="tw" text-anchor="middle">gn/ge · PE</text>
+          <text x="708" y="354" class="ts">metalen bakje (optioneel)</text>
+        </svg>
+      </div>
+      <div class="cols">
+        <div class="notes">
+          <h3 style="margin-bottom:6px">Zo werkt een kanaal</h3>
+          <ul>
+            <li>De ESP32 geeft op GPIO n een PWM-signaal van 500 Hz, 0–3,3 V.</li>
+            <li>R1 (100 Ω) beperkt de stroom naar de gate. R2 (10 kΩ) houdt de MOSFET uit zolang de ESP32 opstart of uit is.</li>
+            <li>Gaat de MOSFET aan, dan trekt hij ader 2 naar −48 V en loopt er stroom door de spoel.</li>
+            <li>De diode vangt de spanningspiek op bij het uitschakelen. Streep (kathode) naar +48 ref, andere kant aan de drain.</li>
+          </ul>
+        </div>
+        <div class="notes">
+          <h3 style="margin-bottom:6px">Pootjes IRL540N</h3>
+          <p>Tekst naar je toe, pootjes naar beneden: links G (gate), midden D (drain), rechts S (source). De metalen tab is ook D: laat hem niets anders raken.</p>
+          <h3 style="margin:12px 0 6px">Print-aansluitingen</h3>
+          <ul>
+            <li><span class="mono">D1–D10</span>: ader 2 van bakje 1–10 (5 printkroonstenen 2-polig)</li>
+            <li><span class="mono">GND</span>: 2 polen parallel naar X2</li>
+            <li><span class="mono">+48 ref</span>: van F11 (kathodes van alle diodes)</li>
+            <li><span class="mono">5V / 0V</span>: van G2 naar de 5V- en GND-pin van de ESP32; 0 V op de GND-bus</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLAD 4 -->
+  <section class="sheet" id="bakje2">
+    <div class="sheet-h"><h2>Bakje, bovenaanzicht (spoel dwars op de luchtstroom)</h2><span class="no">Blad 4 / 7</span></div>
+    <div class="sheet-b">
+      <p>Definitief ontwerp. De micanietstrip ligt dwars op de luchtstroom, over de volle breedte van 500 mm. De lucht stroomt door de korte kant. Daardoor kan het bakje veel ondieper (standaard 200 mm). Op schaal; de diepte en het aantal ventilatoren zijn aan te passen en werken door in blad 7.</p>
+      <div class="ctrl">
+        <label for="b_d">Bakje diepte (mm)<input id="b_d" type="number" value="200" step="10" min="120"></label>
+        <label for="b_f">Ventilatoren per bakje<select id="b_f"><option>1</option><option selected>2</option><option>3</option></select></label>
+        <label for="b_p">Vermogen per bakje (W)<input id="b_p" type="number" value="100" step="5" min="10"></label>
+      </div>
+      <div class="draw" style="--minw:640px" id="bdraw"></div>
+      <ul class="checks" id="bchecks"></ul>
+      <div class="notes">
+        <ul>
+          <li><b>Zelfde spoel:</b> de strip blijft 460 × 40 mm met dezelfde NiCr-draad (≈ 408 cm voor 100 W). Alleen de richting draait.</li>
+          <li><b>Lucht dwars over de spoel</b> koelt de draad beter dan lucht langs de strip. Maar de lucht moet nu over 500 mm breedte gelijk verdeeld worden: met 1 ventilator van 50 mm krijgen de uiteinden van de spoel te weinig lucht en worden ze heter. Daarom 2 ventilatoren (of 3).</li>
+          <li><b>12 V-belasting:</b> 2 ventilatoren per bakje bij 30 bakjes = 60 stuks × ±0,07 A ≈ 4,2 A. Dat past nog op de DDR-60L-12 (5 A), maar zonder veel reserve. Meet de stroom van één ventilator na.</li>
+          <li><b>Ventilatoren aan de koude inlaat.</b> Ze blazen koude lucht over de spoel. Maximaal 70 °C voor de ventilator.</li>
+          <li><b>Ventilatoren parallel op ader 3 (+12 V) en ader 4 (−12 V).</b> Rood draadje van elke fan op ader 3, zwart op ader 4. Solderen en krimpkous, langs de koude inlaatwand; deze verbinding zit niet in de busklem.</li>
+          <li><b>De kabel blijft koud.</b> De ÖLFLEX mag maximaal 70 °C worden, dus hij eindigt bij de porseleinen busklem aan de inlaatkant. Vanaf daar loopt siliconendraad naar de spoel. NiCr nooit solderen: klemmen in de busklem, uiteinde 3–4× dubbelgevouwen.</li>
+          <li><b>Bakje 60 mm hoog</b> (steek 72 mm in het rek). Strip ligt plat; met de spoel ±12 mm dik blijft er ruim 20 mm boven en onder. De fan van 50 mm past binnen de wanden.</li>
+          <li><b>Spoel vrij in de luchtstroom</b>, minstens 10 mm van bodem, deksel en wanden. Windingen mogen elkaar niet raken: NiCr is blank.</li>
+          <li><b>Controle per bakje:</b> meet vóór aansluiten de weerstand tussen ader 1 en ader 2. Verwacht ≈ 23 Ω (100 W) tot ≈ 31 Ω (75 W).</li>
+          <li><b>Kabel aan de koude kant</b>: via een tule in de flens de koude hoek in, naar de busklem. Alle kabels gaan als bundel door de koude gang naar de kast. Siliconendraad loopt langs de zijwand naar de bouten van de strip. Geen stekker: de kabel krijgt een lus zodat het bakje eruit kan (blad 5).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- BLAD 5 -->
+  <section class="sheet" id="montage-bakje">
+    <div class="sheet-h"><h2>Bakje inschuiven, vastzetten en afdichten</h2><span class="no">Blad 5 / 7</span></div>
+    <div class="sheet-b">
+      <p>Uitgangspunt voor het CAD-ontwerp. Elk bakje schuift op twee geleiders in het rek en wordt aan de koude kant vastgezet met een frontplaat (flens). De flens doet drie dingen tegelijk: hij zet het bakje vast, dekt de kieren rond het bakje af en drukt een afdichting aan. Aan de warme kant zit niets: daar gaat de warme lucht vrij naar buiten. Maten horen bij een bakje van 500 × 200 × 60 mm op een steek van 72 mm (15 bakjes per rek binnen 2000 mm totale hoogte).</p>
+      <div class="cols">
+        <div class="draw" style="--minw:520px"><svg viewBox="-80 0 910 346" role="img" aria-label="Vooraanzicht flenzen vanuit de koude gang"><text class="b-s" x="60" y="22">Vooraanzicht vanuit de koude gang (mm)</text><rect x="60" y="40" width="40" height="216" fill="var(--modg)" stroke="var(--ink)" stroke-width="1.2"/><rect x="600" y="40" width="40" height="216" fill="var(--modg)" stroke="var(--ink)" stroke-width="1.2"/><rect x="60" y="41" width="580" height="70" fill="var(--mod)" stroke="var(--ink)" stroke-width="1.6" opacity="1"/><line x1="64" y1="44" x2="636" y2="44" stroke="var(--w-12)" stroke-width="3" stroke-dasharray="6 4"/><circle cx="80.0" cy="76.0" r="5.5" fill="var(--sheet)" stroke="var(--ink)" stroke-width="1.4"/><path d="M76.0 76.0 H84.0 M80.0 72.0 V80.0" stroke="var(--ink)" stroke-width="1"/><circle cx="620.0" cy="76.0" r="5.5" fill="var(--sheet)" stroke="var(--ink)" stroke-width="1.4"/><path d="M616.0 76.0 H624.0 M620.0 72.0 V80.0" stroke="var(--ink)" stroke-width="1"/><rect x="202.0" y="53.0" width="46" height="46" fill="var(--sheet)" stroke="var(--ink)" stroke-width="1.2"/><circle cx="225.0" cy="76.0" r="20" fill="none" stroke="var(--ink)" stroke-width="1"/><rect x="452.0" y="53.0" width="46" height="46" fill="var(--sheet)" stroke="var(--ink)" stroke-width="1.2"/><circle cx="475.0" cy="76.0" r="20" fill="none" stroke="var(--ink)" stroke-width="1"/><rect x="310.0" y="68.0" width="80" height="16" rx="8" fill="var(--sheet)" stroke="var(--ink)" stroke-width="1.4"/><text class="b-s" x="652" y="80.0">bakje n+1</text><rect x="60" y="113" width="580" height="70" fill="var(--mod)" stroke="var(--ink)" stroke-width="1.6" opacity="1"/><line x1="64" y1="116" x2="636" y2="116" stroke="var(--w-12)" stroke-width="3" stroke-dasharray="6 4"/><circle cx="80.0" cy="148.0" r="5.5" fill="var(--sheet)" stroke="var(--ink)" stroke-width="1.4"/><path d="M76.0 148.0 H84.0 M80.0 144.0 V152.0" stroke="var(--ink)" stroke-width="1"/><circle cx="620.0" cy="148.0" r="5.5" fill="var(--sheet)" stroke="var(--ink)" stroke-width="1.4"/><path d="M616.0 148.0 H624.0 M620.0 144.0 V152.0" stroke="var(--ink)" stroke-width="1"/><rect x="202.0" y="125.0" width="46" height="46" fill="var(--sheet)" stroke="var(--ink)" stroke-width="1.2"/><circle cx="225.0" cy="148.0" r="20" fill="none" stroke="var(--ink)" stroke-width="1"/><rect x="452.0" y="125.0" width="46" height="46" fill="var(--sheet)" stroke="var(--ink)" stroke-width="1.2"/><circle cx="475.0" cy="148.0" r="20" fill="none" stroke="var(--ink)" stroke-width="1"/><rect x="310.0" y="140.0" width="80" height="16" rx="8" fill="var(--sheet)" stroke="var(--ink)" stroke-width="1.4"/><text class="b-s" x="652" y="152.0">bakje n</text><rect x="60" y="185" width="580" height="70" fill="var(--modg)" stroke="var(--ink)" stroke-width="1.6" opacity="0.7"/><line x1="64" y1="188" x2="636" y2="188" stroke="var(--w-12)" stroke-width="3" stroke-dasharray="6 4"/><circle cx="80.0" cy="220.0" r="5.5" fill="var(--sheet)" stroke="var(--ink)" stroke-width="1.4"/><path d="M76.0 220.0 H84.0 M80.0 216.0 V224.0" stroke="var(--ink)" stroke-width="1"/><circle cx="620.0" cy="220.0" r="5.5" fill="var(--sheet)" stroke="var(--ink)" stroke-width="1.4"/><path d="M616.0 220.0 H624.0 M620.0 216.0 V224.0" stroke="var(--ink)" stroke-width="1"/><text class="b-s" x="652" y="224.0">lege plek: blindflens</text><text class="b-s" x="225.0" y="278" text-anchor="middle">uitsparing fan 46 × 46</text><text class="b-s" x="350.0" y="296" text-anchor="middle">handgreep (sleuf 80 × 16)</text><text class="b-s" x="80.0" y="278" text-anchor="middle">M5</text><text class="b-s" x="620.0" y="278" text-anchor="middle">M5</text><line class="b-dim" x1="60" y1="314" x2="640" y2="314"/><text class="b-t" x="350.0" y="332" text-anchor="middle">flens 580 (= 500 + 2 × 40)</text><line class="b-dim" x1="40" y1="41" x2="40" y2="111"/><text class="b-t" x="34" y="80.0" text-anchor="end">70</text><line class="b-dim" x1="10" y1="40" x2="10" y2="112"/><text class="b-s" x="4" y="128" text-anchor="end">steek 72</text></svg></div>
+        <div class="draw" style="--minw:420px"><svg viewBox="0 0 550 294" role="img" aria-label="Zijaanzicht bakjes met flens, afdichting en geleider"><text class="b-s" x="20" y="22">Zijaanzicht, doorsnede door 2 bakjes (mm)</text><rect x="150" y="40" width="20" height="164" fill="var(--modg)" stroke="var(--ink)" stroke-width="1.2"/><text class="b-s" x="160.0" y="222" text-anchor="middle">stijl</text><rect x="143" y="50" width="2" height="70" fill="var(--ink)"/><rect x="145" y="56" width="5" height="58" fill="var(--w-12)"/><rect x="145" y="55.0" width="205" height="60" fill="var(--mod)" stroke="var(--ink)" stroke-width="1.4"/><rect x="152" y="60.0" width="15" height="50" fill="var(--sheet)" stroke="var(--ink)" stroke-width="1"/><rect x="230" y="79.0" width="40" height="12" fill="var(--modg)" stroke="var(--ink)" stroke-width="1"/><rect x="170" y="115.0" width="180" height="3" fill="var(--w-m48)"/><path d="M134 85.0 H176" stroke="var(--ink)" stroke-width="3"/><path class="b-ac" d="M40 85.0 H136"/><path class="b-ah" d="M356 85.0 H420"/><rect x="143" y="122" width="2" height="70" fill="var(--ink)"/><rect x="145" y="128" width="5" height="58" fill="var(--w-12)"/><rect x="145" y="127.0" width="205" height="60" fill="var(--mod)" stroke="var(--ink)" stroke-width="1.4"/><rect x="152" y="132.0" width="15" height="50" fill="var(--sheet)" stroke="var(--ink)" stroke-width="1"/><rect x="230" y="151.0" width="40" height="12" fill="var(--modg)" stroke="var(--ink)" stroke-width="1"/><rect x="170" y="187.0" width="180" height="3" fill="var(--w-m48)"/><path d="M134 157.0 H176" stroke="var(--ink)" stroke-width="3"/><path class="b-ac" d="M40 157.0 H136"/><path class="b-ah" d="M356 157.0 H420"/><line class="b-dim" x1="440" y1="55.0" x2="440" y2="115.0"/><text class="b-t" x="446" y="90.0">60</text><text class="b-s" x="30" y="244">KOUDE GANG</text><text class="b-s" x="360" y="244">KAMER (warm)</text><text class="b-s" x="260.0" y="222" text-anchor="middle">geleider L 20×20×2</text><text class="b-s" x="90" y="44" text-anchor="middle">flens + M5</text><line class="b-dim" x1="150" y1="264" x2="350" y2="264"/><text class="b-t" x="250.0" y="282" text-anchor="middle">200</text></svg></div>
+      </div>
+      <div class="lg">
+        <span><i style="background:var(--mod)"></i>Flens / bakje</span>
+        <span><i style="background:var(--modg)"></i>Stijl rek, blindflens</span>
+        <span><i style="background:var(--w-12)"></i>Afdichting (schuimrubber)</span>
+        <span><i style="background:var(--w-m48)"></i>Geleider</span>
+      </div>
+      <div class="tbl">
+        <h3 style="margin-bottom:8px">Onderdelen en maten voor de tekenaar</h3>
+        <table>
+          <tr><th>Onderdeel</th><th>Maat</th><th>Uitvoering</th><th>Opmerking</th></tr>
+          <tr><td>Bakje</td><td class="mono">500 × 200 × 60</td><td>plaatstaal, deksel afneembaar</td><td>Spoel dwars (blad 4). Achterkant (warm) open of grof rooster.</td></tr>
+          <tr><td>Flens (frontplaat)</td><td class="mono">580 × 70 × 1,5–2</td><td>plaatstaal, vast aan het bakje</td><td>2 uitsparingen 46 × 46 voor de fans, handgreep-sleuf 80 × 16 in het midden, 2 gaten Ø5,5 op 20 mm uit de zijkant, verticaal in het midden.</td></tr>
+          <tr><td>Afdichting flens ↔ stijl</td><td class="mono">±10 × 5</td><td>EPDM- of siliconen schuimband, zelfklevend</td><td>Op de achterkant van de flens, links en rechts over de stijl.</td></tr>
+          <tr><td>Afdichting flens ↔ flens</td><td class="mono">±10 × 5</td><td>idem</td><td>Op de bovenrand van de flens; sluit de 2 mm naad naar de flens erboven (flens 70 hoog op steek 72).</td></tr>
+          <tr><td>Stijl rek (koude kant)</td><td class="mono">40 breed</td><td>U- of L-profiel</td><td>Per 72 mm een M5-gat met inpersmoer of kooimoer. Links en rechts één stijl per rek.</td></tr>
+          <tr><td>Geleider</td><td class="mono">L 20 × 20 × 2, lengte ±200</td><td>aluminium of staal</td><td>Links en rechts per bakje, vast aan de zijwand van de binnenbox of het rekframe. Speling bakje ↔ geleider 2–3 mm per kant.</td></tr>
+          <tr><td>Blindflens</td><td class="mono">580 × 70</td><td>plaatstaal, zonder uitsparingen</td><td>Voor elke lege plek, anders lekt koude lucht direct naar de kamer.</td></tr>
+          <tr><td>Kabel bakje</td><td class="mono">lus ±60 cm</td><td>ÖLFLEX 140 5G1</td><td>Komt binnen via een tule in de flens bij de koude hoek, naar de porseleinen busklem. Alle kabels als bundel via de koude gang naar de kast. Lus zo leggen dat het bakje de koude gang in kan zonder de busklem los te maken.</td></tr>
+        </table>
+      </div>
+      <div class="cols">
+        <div class="notes">
+          <h3 style="margin-bottom:6px">Bakje eruit halen</h3>
+          <ol>
+            <li>Kanaal op 0 % zetten en de zekering (Fn) openklappen.</li>
+            <li>Deur van de kap en deur van de binnenbox open.</li>
+            <li>2 M5-schroeven van de flens losdraaien.</li>
+            <li>Bakje aan de greep 200 mm de koude gang in trekken (gang is 300 mm).</li>
+            <li>Bakje in de lengte van de gang door de deur naar buiten schuiven; de kabellus loopt mee.</li>
+            <li>Deksel eraf, busklem losdraaien als het bakje helemaal weg moet.</li>
+          </ol>
+        </div>
+        <div class="notes">
+          <h3 style="margin-bottom:6px">Nog te beslissen bij het CAD-ontwerp</h3>
+          <ul>
+            <li>Rekframe los in de binnenbox, of geleiders en stijlen direct aan de wanden van de binnenbox.</li>
+            <li>Deurbreedte van de binnenbox ≥ 220 mm (bakje 200 diep + speling), hoogte over alle bakjes.</li>
+            <li>Ruimte in de binnenbox voor de 30 kabellussen (langs de zijwanden, 40 mm per kant).</li>
+            <li>Hoogte bij 30 bakjes: 780 + 100 + 15 × 72 + 40 = 2000 mm, precies de aangenomen grens. Deurhoogte nog nameten.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- BLAD 6 -->
+  <section class="sheet" id="montageplaat">
+    <div class="sheet-h"><h2>Montageplaat bij 3 kW (Rittal AX 1094.000)</h2><span class="no">Blad 6 / 7</span></div>
+    <div class="sheet-b">
+      <p>Op schaal, 1 eenheid = 1 mm. Kast 800 × 400 × 250 mm, montageplaat 750 × 375 mm. Drie DIN-rails boven elkaar; elke groep van 10 bakjes is een eigen kolom met eigen voeding, zekeringen, verdelers en print.</p>
+      <div class="draw" style="--minw:700px"><svg font-family="IBM Plex Mono, monospace" viewBox="-12 -24 800 432" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Montageplaat Rittal AX 1094.000 op schaal"><rect x="0" y="0" width="750" height="375" class="m-plate"/><rect x="10.0" y="140.0" width="730.0" height="25.0" class="m-duct"/><rect x="10.0" y="233.0" width="730.0" height="25.0" class="m-duct"/><rect x="236.7" y="10.0" width="25.0" height="355.0" class="m-duct"/><rect x="488.3" y="10.0" width="25.0" height="355.0" class="m-duct"/><text x="14" y="152.5" class="m-sub" font-size="6" dominant-baseline="middle">kabelgoot 40×25</text><text x="14" y="245.5" class="m-sub" font-size="6" dominant-baseline="middle">kabelgoot 40×25</text><rect x="10.0" y="55.1" width="226.7" height="35" class="m-rail"/><rect x="261.7" y="55.1" width="226.7" height="35" class="m-rail"/><rect x="513.3" y="55.1" width="226.7" height="35" class="m-rail"/><rect x="10.0" y="181.6" width="226.7" height="35" class="m-rail"/><rect x="261.7" y="181.6" width="226.7" height="35" class="m-rail"/><rect x="513.3" y="181.6" width="226.7" height="35" class="m-rail"/><rect x="10.0" y="52.6" width="9.5" height="40.0" class="m-end"/><rect x="19.5" y="29.1" width="18.0" height="87.0" class="m-v230"/><text x="28.5" y="72.6" class="m-lbl" font-size="7" transform="rotate(-90 28.5 72.6)" text-anchor="middle" dominant-baseline="middle">RCBO A</text><rect x="42.5" y="10.0" width="110.0" height="125.2" class="m-psu"/><text x="97.5" y="68.6" class="m-lbl" font-size="7" text-anchor="middle" dominant-baseline="middle">SDR-960-48 A</text><text x="97.5" y="78.6" class="m-sub" font-size="5.5" text-anchor="middle" dominant-baseline="middle">110 × 125 mm · 960 W</text><rect x="157.5" y="52.6" width="9.5" height="40.0" class="m-end"/><rect x="10.0" y="179.1" width="9.5" height="40.0" class="m-end"/><rect x="19.5" y="170.0" width="28.6" height="58.1" class="m-prd"/><text x="33.8" y="199.1" class="m-lbl" font-size="7" transform="rotate(-90 33.8 199.1)" text-anchor="middle" dominant-baseline="middle">+48</text><rect x="48.1" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="54.3" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="60.5" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="66.7" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="72.9" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="79.1" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="85.3" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="91.5" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="97.7" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="103.9" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="110.1" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="116.3" y="171.1" width="2.2" height="56.0" class="m-end"/><rect x="118.5" y="170.0" width="28.6" height="58.1" class="m-pbu"/><text x="132.8" y="199.1" class="m-lbl" font-size="7" transform="rotate(-90 132.8 199.1)" text-anchor="middle" dominant-baseline="middle">−48</text><rect x="147.1" y="170.0" width="28.6" height="58.1" class="m-pgy"/><text x="161.4" y="199.1" class="m-lbl" font-size="7" transform="rotate(-90 161.4 199.1)" text-anchor="middle" dominant-baseline="middle">+12</text><rect x="175.7" y="170.0" width="28.6" height="58.1" class="m-pbu"/><text x="190.0" y="199.1" class="m-lbl" font-size="7" transform="rotate(-90 190.0 199.1)" text-anchor="middle" dominant-baseline="middle">−12</text><rect x="204.3" y="179.1" width="9.5" height="40.0" class="m-end"/><text x="82.1" y="168.0" class="m-sub" font-size="5.5" text-anchor="middle">FA1–FA10 + ref</text><rect x="43.3" y="263.0" width="160.0" height="100.0" class="m-pcb"/><text x="123.3" y="309.0" class="m-lbl" font-size="7" text-anchor="middle" dominant-baseline="middle">MOSFET-print A + ESP32</text><text x="123.3" y="319.0" class="m-sub" font-size="5.5" text-anchor="middle" dominant-baseline="middle">160 × 100 mm (Europrint)</text><text x="123.3" y="-8" class="m-col" font-size="11" text-anchor="middle">Groep A · bakje 1–10</text><rect x="261.7" y="52.6" width="9.5" height="40.0" class="m-end"/><rect x="271.2" y="29.1" width="18.0" height="87.0" class="m-v230"/><text x="280.2" y="72.6" class="m-lbl" font-size="7" transform="rotate(-90 280.2 72.6)" text-anchor="middle" dominant-baseline="middle">RCBO B</text><rect x="294.2" y="10.0" width="110.0" height="125.2" class="m-psu"/><text x="349.2" y="68.6" class="m-lbl" font-size="7" text-anchor="middle" dominant-baseline="middle">SDR-960-48 B</text><text x="349.2" y="78.6" class="m-sub" font-size="5.5" text-anchor="middle" dominant-baseline="middle">110 × 125 mm · 960 W</text><rect x="409.2" y="44.6" width="6.2" height="56.0" class="m-pe"/><rect x="415.4" y="44.6" width="6.2" height="56.0" class="m-pe"/><rect x="421.6" y="27.6" width="17.5" height="90.0" class="m-dc"/><text x="430.3" y="72.6" class="m-lbl" font-size="6" transform="rotate(-90 430.3 72.6)" text-anchor="middle" dominant-baseline="middle">DDR-15 5 V</text><rect x="439.1" y="44.6" width="6.2" height="56.0" class="m-fuse"/><rect x="445.3" y="44.6" width="6.2" height="56.0" class="m-fuse"/><rect x="451.5" y="44.6" width="6.2" height="56.0" class="m-fuse"/><rect x="457.7" y="44.6" width="2.2" height="56.0" class="m-end"/><rect x="459.9" y="52.6" width="9.5" height="40.0" class="m-end"/><rect x="261.7" y="179.1" width="9.5" height="40.0" class="m-end"/><rect x="271.2" y="170.0" width="28.6" height="58.1" class="m-prd"/><text x="285.5" y="199.1" class="m-lbl" font-size="7" transform="rotate(-90 285.5 199.1)" text-anchor="middle" dominant-baseline="middle">+48</text><rect x="299.8" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="306.0" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="312.2" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="318.4" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="324.6" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="330.8" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="337.0" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="343.2" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="349.4" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="355.6" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="361.8" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="368.0" y="171.1" width="2.2" height="56.0" class="m-end"/><rect x="370.2" y="170.0" width="28.6" height="58.1" class="m-pbu"/><text x="384.5" y="199.1" class="m-lbl" font-size="7" transform="rotate(-90 384.5 199.1)" text-anchor="middle" dominant-baseline="middle">−48</text><rect x="398.8" y="170.0" width="28.6" height="58.1" class="m-pgy"/><text x="413.1" y="199.1" class="m-lbl" font-size="7" transform="rotate(-90 413.1 199.1)" text-anchor="middle" dominant-baseline="middle">+12</text><rect x="427.4" y="170.0" width="28.6" height="58.1" class="m-pbu"/><text x="441.7" y="199.1" class="m-lbl" font-size="7" transform="rotate(-90 441.7 199.1)" text-anchor="middle" dominant-baseline="middle">−12</text><rect x="456.0" y="179.1" width="9.5" height="40.0" class="m-end"/><text x="333.8" y="168.0" class="m-sub" font-size="5.5" text-anchor="middle">FB1–FB10 + ref</text><rect x="295.0" y="263.0" width="160.0" height="100.0" class="m-pcb"/><text x="375.0" y="309.0" class="m-lbl" font-size="7" text-anchor="middle" dominant-baseline="middle">MOSFET-print B + ESP32</text><text x="375.0" y="319.0" class="m-sub" font-size="5.5" text-anchor="middle" dominant-baseline="middle">160 × 100 mm (Europrint)</text><text x="375.0" y="-8" class="m-col" font-size="11" text-anchor="middle">Groep B · bakje 11–20</text><rect x="513.3" y="52.6" width="9.5" height="40.0" class="m-end"/><rect x="522.8" y="29.1" width="18.0" height="87.0" class="m-v230"/><text x="531.8" y="72.6" class="m-lbl" font-size="7" transform="rotate(-90 531.8 72.6)" text-anchor="middle" dominant-baseline="middle">RCBO C</text><rect x="545.8" y="10.0" width="110.0" height="125.2" class="m-psu"/><text x="600.8" y="68.6" class="m-lbl" font-size="7" text-anchor="middle" dominant-baseline="middle">SDR-960-48 C</text><text x="600.8" y="78.6" class="m-sub" font-size="5.5" text-anchor="middle" dominant-baseline="middle">110 × 125 mm · 960 W</text><rect x="660.8" y="27.6" width="52.5" height="90.0" class="m-dc"/><text x="687.1" y="68.6" class="m-lbl" font-size="7" text-anchor="middle" dominant-baseline="middle">DDR-60</text><text x="687.1" y="78.6" class="m-sub" font-size="5.5" text-anchor="middle" dominant-baseline="middle">12 V</text><rect x="713.3" y="52.6" width="9.5" height="40.0" class="m-end"/><rect x="513.3" y="179.1" width="9.5" height="40.0" class="m-end"/><rect x="522.8" y="170.0" width="28.6" height="58.1" class="m-prd"/><text x="537.1" y="199.1" class="m-lbl" font-size="7" transform="rotate(-90 537.1 199.1)" text-anchor="middle" dominant-baseline="middle">+48</text><rect x="551.4" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="557.6" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="563.8" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="570.0" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="576.2" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="582.4" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="588.6" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="594.8" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="601.0" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="607.2" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="613.4" y="171.1" width="6.2" height="56.0" class="m-fuse"/><rect x="619.6" y="171.1" width="2.2" height="56.0" class="m-end"/><rect x="621.8" y="170.0" width="28.6" height="58.1" class="m-pbu"/><text x="636.1" y="199.1" class="m-lbl" font-size="7" transform="rotate(-90 636.1 199.1)" text-anchor="middle" dominant-baseline="middle">−48</text><rect x="650.4" y="170.0" width="28.6" height="58.1" class="m-pgy"/><text x="664.7" y="199.1" class="m-lbl" font-size="7" transform="rotate(-90 664.7 199.1)" text-anchor="middle" dominant-baseline="middle">+12</text><rect x="679.0" y="170.0" width="28.6" height="58.1" class="m-pbu"/><text x="693.3" y="199.1" class="m-lbl" font-size="7" transform="rotate(-90 693.3 199.1)" text-anchor="middle" dominant-baseline="middle">−12</text><rect x="707.6" y="179.1" width="9.5" height="40.0" class="m-end"/><text x="585.4" y="168.0" class="m-sub" font-size="5.5" text-anchor="middle">FC1–FC10 + ref</text><rect x="546.7" y="263.0" width="160.0" height="100.0" class="m-pcb"/><text x="626.7" y="309.0" class="m-lbl" font-size="7" text-anchor="middle" dominant-baseline="middle">MOSFET-print C + ESP32</text><text x="626.7" y="319.0" class="m-sub" font-size="5.5" text-anchor="middle" dominant-baseline="middle">160 × 100 mm (Europrint)</text><text x="626.7" y="-8" class="m-col" font-size="11" text-anchor="middle">Groep C · bakje 21–30</text><text x="415.2" y="111.2" class="m-sub" font-size="5.5" text-anchor="middle">PE</text><text x="448.1" y="111.2" class="m-sub" font-size="5.5" text-anchor="middle">F11–13</text><line x1="0" y1="389" x2="750" y2="389" class="m-dim"/><line x1="0" y1="384" x2="0" y2="394" class="m-dim"/><line x1="750" y1="384" x2="750" y2="394" class="m-dim"/><text x="375.0" y="401" class="m-dimt" font-size="9" text-anchor="middle">750 mm (montageplaat)</text><line x1="764" y1="0" x2="764" y2="375" class="m-dim"/><line x1="759" y1="0" x2="769" y2="0" class="m-dim"/><line x1="759" y1="375" x2="769" y2="375" class="m-dim"/><text x="776" y="187.5" class="m-dimt" font-size="9" text-anchor="middle" transform="rotate(90 776 187.5)">375 mm</text><text x="375.0" y="372" class="m-sub" font-size="6" text-anchor="middle">↓ kabelinvoer bakjes via wartelplaat onderzijde ↓</text></svg></div>
+      <div class="lg">
+        <span><i style="background:var(--psu)"></i>Voeding 48 V</span>
+        <span><i style="background:var(--v230)"></i>RCBO 230 V (1 per fase)</span>
+        <span><i style="background:var(--dcc)"></i>DC-DC 5 V / 12 V</span>
+        <span><i style="background:var(--fuse)"></i>Zekeringklem PT 4-HESI</span>
+        <span><i style="background:var(--red)"></i><i style="background:var(--blue)"></i><i style="background:var(--grey)"></i>PTFIX +48 / −48 / +12 / −12</span>
+        <span><i style="background:var(--pe)"></i>Aardklem</span>
+        <span><i style="background:var(--pcb)"></i>Print (geschatte maat)</span>
+        <span><i style="background:var(--duct)"></i>Kabelgoot</span>
+      </div>
+      <div class="cols">
+        <div class="tbl">
+          <h3 style="margin-bottom:8px">Passen de rails? (per kolom 227 mm)</h3>
+          <table>
+            <tr><th>Rail</th><th>Inhoud</th><th>Nodig</th><th>Past</th></tr>
+            <tr><td class="mono">1 · A</td><td>RCBO + SDR-960</td><td class="n">157 mm</td><td><span class="pill ok">ja</span></td></tr>
+            <tr><td class="mono">1 · B</td><td>RCBO + SDR + 2× PE + DDR-15 + F11–13</td><td class="n">208 mm</td><td><span class="pill ok">ja</span></td></tr>
+            <tr><td class="mono">1 · C</td><td>RCBO + SDR + DDR-60</td><td class="n">210 mm</td><td><span class="pill ok">ja</span></td></tr>
+            <tr><td class="mono">2 · A/B/C</td><td>4 PTFIX + 11 zekeringklemmen</td><td class="n">204 mm</td><td><span class="pill ok">ja</span></td></tr>
+            <tr><td class="mono">3 · A/B/C</td><td>MOSFET-print + ESP32</td><td class="n">160 mm</td><td><span class="pill ok">ja</span></td></tr>
+          </table>
+        </div>
+        <div class="tbl">
+          <h3 style="margin-bottom:8px">Past de hoogte? (375 mm)</h3>
+          <table>
+            <tr><th>Laag</th><th>Hoogte</th></tr>
+            <tr><td>Marge boven</td><td class="n">10</td></tr>
+            <tr><td>Rail 1 · SDR-960</td><td class="n">125</td></tr>
+            <tr><td>Kabelgoot</td><td class="n">25</td></tr>
+            <tr><td>Rail 2 · PTFIX / HESI</td><td class="n">58</td></tr>
+            <tr><td>Kabelgoot</td><td class="n">25</td></tr>
+            <tr><td>Rij 3 · print</td><td class="n">100</td></tr>
+            <tr><td>Tussenruimte (5 mm × 4)</td><td class="n">20</td></tr>
+            <tr class="sum"><td>Totaal</td><td class="n">363 mm</td></tr>
+          </table>
+          <p class="foot" style="margin-top:6px">Krap: 12 mm over. Geen goot boven rail 1; 230 V komt via de verticale goot binnen.</p>
+        </div>
+      </div>
+      <div class="tbl">
+        <h3 style="margin-bottom:8px">Gebruikte maten</h3>
+        <table>
+          <tr><th>Onderdeel</th><th>Breedte op rail</th><th>Hoogte</th><th>Diepte</th><th>Bron</th></tr>
+          <tr><td>Mean Well SDR-960-48</td><td class="n">110</td><td class="n">125,2</td><td class="n">150</td><td>datasheet</td></tr>
+          <tr><td>Mean Well DDR-15L-05</td><td class="n">17,5</td><td class="n">90</td><td class="n">54,5</td><td>datasheet</td></tr>
+          <tr><td>Mean Well DDR-60L-12</td><td class="n">52,5</td><td class="n">90</td><td class="n">54,6</td><td>datasheet</td></tr>
+          <tr><td>EMAT RCBO 1P+N (85006005)</td><td class="n">18</td><td class="n">87</td><td class="n">76</td><td>datasheet reeks</td></tr>
+          <tr><td>Phoenix PT 4-HESI</td><td class="n">6,2</td><td class="n">56</td><td class="n">62,5</td><td>datasheet</td></tr>
+          <tr><td>Phoenix PTFIX 6/12X2,5-NS35</td><td class="n">28,6</td><td class="n">58,1</td><td class="n">32,1</td><td>datasheet, oriëntatie aangenomen</td></tr>
+          <tr><td>Phoenix PT 4-PE</td><td class="n">6,2</td><td class="n">56</td><td class="n">—</td><td>aangenomen</td></tr>
+          <tr><td>Eindsteun · afsluitplaat</td><td class="n">9,5 · 2,2</td><td class="n">—</td><td class="n">—</td><td>aangenomen</td></tr>
+          <tr><td>MOSFET-print met ESP32</td><td class="n">160</td><td class="n">100</td><td class="n">—</td><td>aangenomen (Europrint)</td></tr>
+        </table>
+      </div>
+      <div class="notes">
+        <ul>
+          <li><b>+48 V per groep gescheiden:</b> elke groep een eigen PTFIX +48 en een eigen zekering voor "+48 ref". De vrijloopdiodes van groep B gaan naar +48 van SDR B.</li>
+          <li><b>−48 V gemeenschappelijk:</b> één DDR-15 voedt alle ESP32's, dus de drie −48 V-uitgangen aan elkaar (SDR-uitgangen zijn zwevend).</li>
+          <li><b>Warmte in de kast:</b> 3 voedingen verliezen samen ±185 W. Filterventilator ±60 m³/h, aanzuig laag aan de ene zijkant, uitblaas hoog aan de andere.</li>
+          <li><b>Fase 1:</b> alleen kolom A plus RCBO A, DDR-15, DDR-60 en F11–13 vullen.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLAD 6 -->
+  <section class="sheet" id="kar">
+    <div class="sheet-h"><h2>Bovenaanzicht kar: 4 CRAH's en de serverruimte als box in een box</h2><span class="no">Blad 7 / 7</span></div>
+    <div class="sheet-b">
+      <p>Op schaal (1 eenheid = 1 mm), kar 2300 × 980 mm volgens tekening DATACENTER CAR. Box in een box: de kar onder de kap is de "kamer" met in elke hoek een CRAH. Daarbinnen staat de serverruimte: een gesloten box met de twee rekken en de koude gang. De bakjes zuigen alleen uit de koude gang en blazen de warme lucht de kamer in; de CRAH's zuigen de kamer leeg en blazen koude lucht via de verhoogde vloer naar de koude gang. De bakjesdiepte komt uit blad 4.</p>
+      <div class="ctrl">
+        <label for="o_or">Koude gang<select id="o_or"><option value="B">Dwars (rekken tegenover elkaar in de lengte)</option><option value="A">In de lengte</option></select></label>
+        <label for="o_n">Aantal bakjes<select id="o_n"><option>10</option><option>20</option><option selected>30</option></select></label>
+        <label for="o_bw">Bakje breedte (mm)<input id="o_bw" type="number" value="500" step="10" min="50"></label>
+        <label for="o_bh">Bakje hoogte + tussenruimte (mm)<input id="o_bh" type="number" value="72" step="5" min="20"></label>
+        <label for="o_rf">Rekframe per kant (mm)<input id="o_rf" type="number" value="40" step="5" min="0"></label>
+        <label for="o_ca">Koude gang (mm)<input id="o_ca" type="number" value="300" step="10" min="100"></label>
+        <label for="o_bx">Wand binnenbox (mm)<input id="o_bx" type="number" value="10" step="1" min="0"></label>
+        <label for="o_cw">CRAH langs de kar (mm)<input id="o_cw" type="number" value="500" step="10" min="100"></label>
+        <label for="o_cd">CRAH dwars op de kar (mm)<input id="o_cd" type="number" value="300" step="10" min="100"></label>
+        <label for="o_hz">Min. vrije ruimte warme lucht (mm)<input id="o_hz" type="number" value="150" step="10" min="0"></label>
+        <label for="o_kw">Kapwand dikte (mm)<input id="o_kw" type="number" value="20" step="5" min="0"></label>
+        <label for="o_mh">Max. totale hoogte (mm)<input id="o_mh" type="number" value="2000" step="10" min="500"></label>
+      </div>
+      <div class="draw" style="--minw:760px" id="topdraw"></div>
+      <div class="lg">
+        <span><i style="background:var(--crah)"></i>CRAH (4×, 1–2 fans)</span>
+        <span><i style="background:var(--psu)"></i>Bakje (kolom)</span>
+        <span><i style="background:var(--cold)"></i>Koude gang</span>
+        <span><i style="background:var(--hot)"></i>Kamer (warme lucht)</span>
+        <span><i style="background:var(--accent)"></i>Kap (stippellijn), binnenbox en deuren</span>
+      </div>
+      <ul class="checks" id="topchecks"></ul>
+    </div>
+  </section>
+  <!-- TABELLEN -->
+  <section class="sheet" id="tabellen">
+    <div class="sheet-h"><h2>Kanaaltabel en draadlijst</h2><span class="no">Bijlage</span></div>
+    <div class="sheet-b">
+      <div class="cols">
+        <div class="tbl">
+          <h3 style="margin-bottom:8px">Kanaaltabel</h3>
+          <table>
+            <thead><tr><th>Bakje</th><th>Zekering</th><th>ESP32-pin</th><th>MOSFET</th><th>Printklem</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">1</td><td class="mono">F1</td><td class="mono">GPIO 4</td><td class="mono">Q1</td><td class="mono">D1</td></tr>
+              <tr><td class="mono">2</td><td class="mono">F2</td><td class="mono">GPIO 13</td><td class="mono">Q2</td><td class="mono">D2</td></tr>
+              <tr><td class="mono">3</td><td class="mono">F3</td><td class="mono">GPIO 16</td><td class="mono">Q3</td><td class="mono">D3</td></tr>
+              <tr><td class="mono">4</td><td class="mono">F4</td><td class="mono">GPIO 17</td><td class="mono">Q4</td><td class="mono">D4</td></tr>
+              <tr><td class="mono">5</td><td class="mono">F5</td><td class="mono">GPIO 18</td><td class="mono">Q5</td><td class="mono">D5</td></tr>
+              <tr><td class="mono">6</td><td class="mono">F6</td><td class="mono">GPIO 19</td><td class="mono">Q6</td><td class="mono">D6</td></tr>
+              <tr><td class="mono">7</td><td class="mono">F7</td><td class="mono">GPIO 23</td><td class="mono">Q7</td><td class="mono">D7</td></tr>
+              <tr><td class="mono">8</td><td class="mono">F8</td><td class="mono">GPIO 25</td><td class="mono">Q8</td><td class="mono">D8</td></tr>
+              <tr><td class="mono">9</td><td class="mono">F9</td><td class="mono">GPIO 26</td><td class="mono">Q9</td><td class="mono">D9</td></tr>
+              <tr><td class="mono">10</td><td class="mono">F10</td><td class="mono">GPIO 27</td><td class="mono">Q10</td><td class="mono">D10</td></tr>
+              <tr><td>G2 (5 V)</td><td class="mono">F11</td><td colspan="3">T2 A · voedt ook +48 ref op de print</td></tr>
+              <tr><td>G3 (12 V)</td><td class="mono">F12</td><td colspan="3">T2 A</td></tr>
+              <tr><td>reserve</td><td class="mono">F13</td><td colspan="3">niet aangesloten</td></tr>
+            </tbody>
+          </table>
+          <p class="foot" style="margin-top:8px">Zekeringen F1–F10: T3,15 A. Niet gebruiken op de ESP32: GPIO 0, 2, 5, 12, 15 (opstartpinnen), 1 en 3 (USB), 6–11 (flash), 14, 34–39.</p>
+        </div>
+        <div class="tbl">
+          <h3 style="margin-bottom:8px">Aderindeling kabel per bakje (ÖLFLEX 140 5G1)</h3>
+          <table>
+            <thead><tr><th>Ader</th><th>Functie</th><th>Kast</th><th>Bakje</th></tr></thead>
+            <tbody>
+              <tr><td class="mono"><span class="chip" style="background:var(--w-p48)"></span>1</td><td>+48 V</td><td>Fn uitgang</td><td>busklem → spoel</td></tr>
+              <tr><td class="mono"><span class="chip" style="background:var(--w-ader)"></span>2</td><td>spoel − (geschakeld)</td><td>print Dn</td><td>busklem → spoel</td></tr>
+              <tr><td class="mono"><span class="chip" style="background:var(--w-12)"></span>3</td><td>+12 V ventilator</td><td>X3</td><td>rood draadje fan</td></tr>
+              <tr><td class="mono"><span class="chip" style="background:var(--w-12);opacity:.55"></span>4</td><td>−12 V ventilator</td><td>X4</td><td>zwart draadje fan</td></tr>
+              <tr><td class="mono"><span class="chip" style="background:var(--w-pe)"></span>gn/ge</td><td>aarde (optioneel)</td><td>PE-klem</td><td>metalen behuizing</td></tr>
+            </tbody>
+          </table>
+          <p class="foot" style="margin-top:8px">De aders zijn zwart met witte cijfers. Gebruik je de groen/gele ader niet, knip hem dan aan beide kanten kort af en isoleer hem. Wil je de bakjes wel aarden, dan zijn 10 extra aardpunten nodig (niet in de BOM).</p>
+        </div>
+      </div>
+
+      <div class="tbl">
+        <h3 style="margin-bottom:8px">Draadlijst kast</h3>
+        <table>
+          <thead><tr><th>Van</th><th>Naar</th><th>Draad</th><th>Opmerking</th></tr></thead>
+          <tbody>
+            <tr><td>Netsnoer bruin / blauw</td><td>Q1 in L / N</td><td class="mono">3×1,5 mm²</td><td>via wartel M20, bevoegd persoon</td></tr>
+            <tr><td>Netsnoer groen/geel</td><td>X0</td><td class="mono">3×1,5 mm²</td><td>aardklem aardt ook de rail</td></tr>
+            <tr><td>Q1 uit L / N</td><td>G1 L / N</td><td class="mono">2,5 mm² bruin / blauw</td><td>H07V-K met adereindhuls</td></tr>
+            <tr><td>X0</td><td>G1 aarde</td><td class="mono">2,5 mm² gn/ge</td><td></td></tr>
+            <tr><td>G1 +V</td><td>X1 in</td><td class="mono">4 mm² rood FLRY</td><td>alleen 48 V-kant (isolatie 60 V)</td></tr>
+            <tr><td>G1 −V</td><td>X2 in</td><td class="mono">4 mm² blauw FLRY</td><td>label "−48V"</td></tr>
+            <tr><td>X1 uit (12×)</td><td>F1–F12 in</td><td class="mono">1,0 mm² rood</td><td>kort, ±20 cm</td></tr>
+            <tr><td>F1–F10 uit</td><td>kabel bakje 1–10, ader 1</td><td class="mono">5G1</td><td></td></tr>
+            <tr><td>F11 uit</td><td>G2 +Vin en print +48 ref</td><td class="mono">1,0 mm² rood</td><td>via printkroonsteen doorlussen</td></tr>
+            <tr><td>F12 uit</td><td>G3 +Vin</td><td class="mono">1,0 mm² rood</td><td></td></tr>
+            <tr><td>X2 uit</td><td>G2 −Vin, G3 −Vin</td><td class="mono">1,0 mm²</td><td>blauw of zwart, label</td></tr>
+            <tr><td>X2 uit (2×)</td><td>print GND</td><td class="mono">1,0 mm²</td><td>2 draden parallel (samen ±20 A)</td></tr>
+            <tr><td>G2 +5 V / 0 V</td><td>print 5V / 0V</td><td class="mono">1,0 mm²</td><td>0 V zit op de GND-bus</td></tr>
+            <tr><td>G3 +Vout / −Vout</td><td>X3 in / X4 in</td><td class="mono">1,0 mm²</td><td>label "+12V" / "−12V"</td></tr>
+            <tr><td>X3 / X4 uit</td><td>kabel bakje, ader 3 / 4</td><td class="mono">5G1</td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="cols">
+        <div class="notes">
+          <h3 style="margin-bottom:6px">Eerste keer inschakelen</h3>
+          <ol>
+            <li>Controleer alle klemmen en adereindhulzen. Trek aan elke draad: hij mag niet loskomen.</li>
+            <li>Stekker eruit. Meet per bakje de weerstand tussen ader 1 en ader 2 (≈ 23–31 Ω) en tussen ader 1 en de behuizing (oneindig).</li>
+            <li>Klap de zekeringhouders F1–F10 open. F11 en F12 erin.</li>
+            <li>Stekker erin, Q1 aan. Meet 48 V op X1–X2, 12 V op X3–X4, 5 V op de ESP32. Alle ventilatoren draaien.</li>
+            <li>Laad de code met alle kanalen op 0 %. Meet met de scope of alle GPIO's laag zijn.</li>
+            <li>Sluit F1. Zet bakje 1 op 10 % en meet de stroom. Verhoog in stappen tot 100 %: verwacht ≈ 2 A.</li>
+            <li>Herhaal per bakje. Houd het totaal onder ≈ 90 %: tien bakjes op vol vermogen vragen 20,8 A, de voeding levert 20 A.</li>
+          </ol>
+        </div>
+        <div class="notes">
+          <h3 style="margin-bottom:6px">Afspraken voor de studenten</h3>
+          <ul>
+            <li>Labels op X1 "+48V", X2 "−48V", X3 "+12V", X4 "−12V". De blauwe −48 V ligt naast de blauwe nul van de 230 V: niet verwisselen.</li>
+            <li>Elke kabel en elk bakje krijgt hetzelfde nummer (1–10) als zijn zekering en kanaal.</li>
+            <li>Wijzig je iets aan de bedrading, pas dan dit schema en de kanaaltabel aan.</li>
+            <li>Fase 2 (20 bakjes, 2× SDR-960) gaat over op een rode CEE-stekker 16 A, 5-polig, met elke voeding op een eigen fase.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <p class="foot">DELTA · HvA Maintenance Lab · hoort bij DELTA_BOM_fase1_eindversie.xlsx.</p>
+</div>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const v=k=>+$(k).value;
+const L=2300,W=980,DECK=780,FLOOR=100,RACKTOP=40;
+function arrow(x1,y1,x2,y2,cls,h){h=h||22;const a=Math.atan2(y2-y1,x2-x1);
+ return `<path class="${cls}" d="M${x1} ${y1}L${x2} ${y2}M${x2-h*Math.cos(a-0.45)} ${y2-h*Math.sin(a-0.45)}L${x2} ${y2}L${x2-h*Math.cos(a+0.45)} ${y2-h*Math.sin(a+0.45)}"/>`}
+const pill=c=>`<span class="pill ${c}">${c==='ok'?'past':c==='bad'?'past niet':'info'}</span>`;
+/* ---------- blad 4: bakje gedraaid ---------- */
+function bakje(){
+ const D=v('b_d'),nf=v('b_f'),P=v('b_p'),B=500,sc=1.1,ox=110,oy=80;
+ const X=x=>ox+x*sc,Y=y=>oy+y*sc;
+ let g=`<rect class="b-box" x="${X(0)}" y="${Y(0)}" width="${B*sc}" height="${D*sc}"/>`;
+ // inlet at bottom (y=D), outlet at top (y=0)
+ const fw=50,fd=15;
+ for(let i=0;i<nf;i++){const cx=B*(i+0.5)/nf;g+=`<rect class="b-fan" x="${X(cx-fw/2)}" y="${Y(D-fd)}" width="${fw*sc}" height="${fd*sc}"/>`;
+  g+=arrow(X(cx),Y(D)+30,X(cx),Y(D)+4,'b-ac',9)}
+ g+=`<text class="b-s" x="${X(B+40)+10}" y="${Y(D)+26}">koude lucht in</text>`;
+ const sy=Math.max(fd+30, (D-40)/2)>D-40-fd-30?D-fd-30-40:(D-40)/2; // strip centred, keep 30 from fan
+ const stripY=Math.min((D-40)/2, D-fd-30-40);
+ g+=`<rect class="b-strip" x="${X(20)}" y="${Y(stripY)}" width="${460*sc}" height="${40*sc}"/>`;
+ let p=`M${X(40)} ${Y(stripY)-4}`;for(let x=40;x<460;x+=10){p+=` Q${X(x+5)} ${Y(stripY+40)+4} ${X(x+10)} ${Y(stripY)-4}`}
+ g+=`<path class="b-coil" d="${p}"/>`;
+ g+=`<circle class="b-kl" cx="${X(30)}" cy="${Y(stripY+20)}" r="5"/><circle class="b-kl" cx="${X(470)}" cy="${Y(stripY+20)}" r="5"/>`;
+ // busklem bottom-left corner + cable
+ g+=`<rect class="b-kl" x="${X(8)}" y="${Y(D-fd-34)}" width="${44*sc}" height="${22*sc}"/>`;
+ g+=`<path class="w wad" d="M${X(-110)} ${Y(D)+36} H${X(30)} V${Y(D-fd-12)}"/><text class="b-s" x="${X(-110)}" y="${Y(D)+14}">kabel 5G1 → bundel</text><text class="b-s" x="${X(-110)}" y="${Y(D)+30}">naar de kast</text><circle cx="${X(30)}" cy="${Y(D)+2}" r="5" fill="var(--sheet)" stroke="var(--ink)" stroke-width="1.6"/><text class="b-s" x="${X(36)+4}" y="${Y(D)+26}">tule in flens</text>`;
+ g+=`<path d="M${X(30)} ${Y(D-fd-34)} V${Y(stripY+25)}" fill="none" stroke="var(--w-p48)" stroke-width="1.8" stroke-dasharray="4 3"/>`;
+ g+=`<path d="M${X(52)} ${Y(D-fd-28)} H${X(490)} V${Y(stripY+20)} H${X(470)+5}" fill="none" stroke="var(--w-p48)" stroke-width="1.8" stroke-dasharray="4 3"/>`;
+ // ader 3/4 naar de ventilatoren (parallel)
+ const fx=[...Array(nf)].map((_,i)=>B*(i+0.5)/nf);
+ const yp=D-fd-6, ym=D-fd-10;
+ let w3=`M${X(30)} ${Y(yp)} H${X(fx[nf-1]-6)}`, w4=`M${X(30)} ${Y(ym)} H${X(fx[nf-1]+6)}`;
+ fx.forEach(x=>{w3+=` M${X(x-6)} ${Y(yp)} V${Y(D-fd)}`;w4+=` M${X(x+6)} ${Y(ym)} V${Y(D-fd)}`});
+ g+=`<path class="w w12p" style="stroke-width:1.8" d="${w3}"/><path class="w w12m" style="stroke-width:1.8" d="${w4}"/>`;
+ fx.forEach(x=>{g+=`<circle class="dot" fill="var(--w-12)" cx="${X(x-6)}" cy="${Y(yp)}" r="3"/>`});
+ g+=`<text class="b-s" x="${X(B+40)+10}" y="${Y(D-fd)-6}">ader 3/4 → fans</text><text class="b-s" x="${X(B+40)+10}" y="${Y(D-fd)+10}">(parallel)</text>`;
+ // flens, afdichting, stijlen, geleiders (zie blad 5)
+ for(const sx of [-40,B]){g+=`<rect x="${X(sx)}" y="${Y(D-25)}" width="${40*sc}" height="${20*sc}" fill="none" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="5 4"/>`;
+  g+=`<rect x="${X(sx)}" y="${Y(D-5)}" width="${40*sc}" height="${5*sc}" fill="var(--w-12)"/>`}
+ for(const gx of [-4,B]){g+=`<rect x="${X(gx)}" y="${Y(10)}" width="${4*sc}" height="${(D-35)*sc}" fill="var(--w-m48)" opacity=".8"/>`}
+ let fl=[-40]; fx.forEach(x=>{fl.push(x-23,x+23)}); fl.push(B+40);
+ for(let i=0;i<fl.length;i+=2){g+=`<rect x="${X(fl[i])}" y="${Y(D)}" width="${(fl[i+1]-fl[i])*sc}" height="${3*sc}" fill="var(--ink)"/>`}
+ g+=`<rect x="${X(B/2-40)}" y="${Y(D)+3*sc}" width="${80*sc}" height="${14*sc}" rx="6" fill="none" stroke="var(--ink)" stroke-width="2"/>`;
+ for(const hx of [-20,B+20]){g+=`<path d="M${X(hx)} ${Y(D)+12} V${Y(D-24)}" stroke="var(--ink)" stroke-width="3"/>`}
+ g+=`<text class="b-s" x="${X(-20)}" y="${Y(D-30)}" text-anchor="middle">stijl</text><text class="b-s" x="${X(B+20)}" y="${Y(D-30)}" text-anchor="middle">stijl</text>`;
+ g+=`<text class="b-s" x="${X(-24)}" y="${Y(D/2)+40}" text-anchor="end">geleider</text>`;
+ g+=`<text class="b-s" x="${X(B/2)}" y="${Y(D)+50}" text-anchor="middle">flens 580 × 70 × 2 · bakje 60 hoog · greep 80 × 16 · M5 op 20 mm van de rand · fan-uitsparing 46 × 46</text>`;
+ g+=`<text class="b-s" x="${X(B/2)}" y="${Y(D)+68}" text-anchor="middle">fans ${nf}× 50 × 50 × 15 mm (Sunon MF50151VX, 12 V) · bevestigingsgaten 40 mm steek</text>`;
+ fx.forEach((x,i)=>{const yy=Y(D)+92+i*14;g+=`<line class="b-dim" x1="${X(0)}" y1="${yy}" x2="${X(x)}" y2="${yy}"/><line class="b-dim" x1="${X(x)}" y1="${yy-5}" x2="${X(x)}" y2="${yy+5}"/><text class="b-s" x="${X(x)+6}" y="${yy+4}">hart fan ${i+1}: ${Math.round(x)} mm</text>`});
+ // outlet arrows
+ for(let i=0;i<5;i++){const cx=B*(i+0.5)/5;g+=arrow(X(cx),Y(0)-4,X(cx),Y(0)-40,'b-ah',9)}
+ g+=`<text class="b-s" x="${X(B/2)}" y="${Y(0)-46}" text-anchor="middle">warm uit (hete zone)</text>`;
+ 
+ g+=`<text class="b-t" x="${X(B/2)}" y="${Y(stripY+40)+20}" text-anchor="middle">micaniet 460 × 40 + NiCr-spoel</text>`;
+ // dims
+ g+=`<line class="b-dim" x1="${X(B+40)+20}" y1="${Y(0)}" x2="${X(B+40)+20}" y2="${Y(D-40)}"/><text class="b-t" x="${X(B+40)+28}" y="${Y(D/2)}">${D} mm</text>`;
+ g+=`<line class="b-dim" x1="${X(0)}" y1="${Y(D)+122+nf*14}" x2="${X(B)}" y2="${Y(D)+122+nf*14}"/><text class="b-t" x="${X(B/2)}" y="${Y(D)+140+nf*14}" text-anchor="middle">bakje 500 mm</text>`;
+ g+=`<line class="b-dim" x1="${X(-40)}" y1="${Y(D)+156+nf*14}" x2="${X(B+40)}" y2="${Y(D)+156+nf*14}"/><text class="b-t" x="${X(B/2)}" y="${Y(D)+174+nf*14}" text-anchor="middle">flens 580 mm</text>`;
+ const H=Y(D)+190+nf*14;
+ $('bdraw').innerHTML=`<svg viewBox="-130 0 1010 ${H}" role="img" aria-label="Bakje met dwarse spoel, bovenaanzicht op schaal">${g}</svg>`;
+ const gapIn=D-fd-(stripY+40), gapOut=stripY;
+ const flow=Math.min(nf*31.6*0.6,999); // ~60% of free-air flow by weerstand
+ const dT=P/(1.2*1005*flow/3600);
+ const vel=flow/3600/(0.5*0.06);
+ const c=[];
+ c.push([gapIn>=30&&gapOut>=30?'ok':'bad',`Ruimte rond de strip: ${Math.round(gapIn)} mm tot de ventilator, ${Math.round(gapOut)} mm tot de uitlaat (min. 30 mm).`]);
+ c.push(['info',`Luchtdebiet ±${flow.toFixed(0)} m³/h (${nf} × 31,6 m³/h vrij, ±60% met weerstand). Lucht warmt ±${dT.toFixed(0)} °C op bij ${P} W; snelheid over de spoel ±${vel.toFixed(2)} m/s.`]);
+ c.push([nf>=2?'ok':'bad',nf>=2?`${nf} ventilatoren verdelen de lucht over de 500 mm breedte.`:`1 ventilator van 50 mm over 500 mm breedte: uiteinden van de spoel krijgen te weinig lucht.`]);
+ $('bchecks').innerHTML=c.map(([k,t])=>`<li>${pill(k)}<span>${t}</span></li>`).join('');
+}
+/* ---------- blad 6: bovenaanzicht ---------- */
+function crah(x,y,w,h,lbl){let s=`<rect class="k-crah" x="${x}" y="${y}" width="${w}" height="${h}"/>`;
+ const horiz=w>h, r=Math.min(horiz?w/4:h/4, (horiz?h:w)/2)*0.6;
+ for(let i=0;i<2;i++){const cx=horiz?x+(i+0.5)*w/2:x+w/2, cy=horiz?y+h/2:y+(i+0.5)*h/2;s+=`<circle class="k-fan" cx="${cx}" cy="${cy}" r="${Math.min(r,90)}"/>`}
+ return s+`<text class="k-t" x="${x+w/2}" y="${y+h/2+10}" text-anchor="middle" style="paint-order:stroke;stroke:var(--crah);stroke-width:10px">${lbl}</text>`}
+function top(){
+ const or=$('o_or').value, N=v('o_n');
+ const bw=v('o_bw'),bd=v('b_d'),bh=v('o_bh'),rf=v('o_rf'),ca=v('o_ca'),bx=v('o_bx'),cx=v('o_cw'),cy=v('o_cd'),hz=v('o_hz'),kw=v('o_kw'),mh=v('o_mh');
+ const iL=L-2*kw,iW=W-2*kw,x0=kw,y0=kw,rw=bw+2*rf,rd=bd+2*rf,perSide=Math.ceil(N/2);
+ let g=`<rect class="k-cart" x="0" y="0" width="${L}" height="${W}"/><rect class="k-hot" x="${x0}" y="${y0}" width="${iL}" height="${iW}"/><rect class="k-hood" x="${x0}" y="${y0}" width="${iL}" height="${iW}"/>`;
+ const ck=[];
+ // inner box size
+ let cols,lev,bxW,bxH;
+ if(or==='B'){cols=Math.max(1,Math.min(Math.floor((iW-2*bx)/rw),perSide));bxW=2*rd+ca+2*bx;bxH=cols*rw+2*bx}
+ else{cols=Math.max(1,Math.min(Math.floor((iL-2*cx-2*bx)/rw),perSide));bxW=cols*rw+2*bx;bxH=2*rd+ca+2*bx}
+ lev=Math.ceil(perSide/cols);
+ const X=x0+(iL-bxW)/2, Y=y0+(iW-bxH)/2;
+ // CRAHs in 4 corners
+ const cr=[[x0,y0],[x0,y0+iW-cy],[x0+iL-cx,y0],[x0+iL-cx,y0+iW-cy]];
+ cr.forEach(([x,y],i)=>{g+=crah(x,y,cx,cy,'CRAH '+(i+1))});
+ // box
+ g+=`<rect x="${X}" y="${Y}" width="${bxW}" height="${bxH}" fill="var(--sheet)" stroke="var(--ink)" stroke-width="${Math.max(bx,4)}"/>`;
+ const my=Y+bxH/2, mx=X+bxW/2;
+ if(or==='B'){
+  const xa=X+bx, xc=xa+rd, xb=xc+ca, ry=Y+bx;
+  g+=`<rect class="k-cold" x="${xc}" y="${Y+bx}" width="${ca}" height="${bxH-2*bx}"/>`;
+  for(const rx of [xa,xb])for(let c=0;c<cols;c++){const yy=ry+c*rw;
+   g+=`<rect class="k-rack" x="${rx}" y="${yy}" width="${rd}" height="${rw}"/><rect class="k-bak" x="${rx+rf}" y="${yy+rf}" width="${bd}" height="${bw}"/><text class="k-s" x="${rx+rd/2}" y="${yy+rf+36}" text-anchor="middle">${lev}× hoog</text>`}
+  g+=arrow(mx-20,my+40,xa+rd*0.3,my+40,'k-ac')+arrow(mx+20,my+40,xb+rd*0.7,my+40,'k-ac');
+  g+=arrow(xa+rd*0.2,my-90,X-110,my-90,'k-ah')+arrow(xb+rd*0.8,my-90,X+bxW+110,my-90,'k-ah');
+  g+=`<text class="k-c" x="${mx}" y="${Y+bx+40}" text-anchor="middle">KOUD</text><text class="k-s" x="${mx}" y="${Y+bx+70}" text-anchor="middle">${ca}</text>`;
+  // doors: inner box at cold aisle ends, outer hood opposite
+  g+=`<line class="k-door" x1="${xc+8}" y1="${Y}" x2="${xc+ca-8}" y2="${Y}"/><line class="k-door" x1="${xc+8}" y1="0" x2="${xc+ca-8}" y2="0"/><text class="k-s" x="${xc+ca/2}" y="-18" text-anchor="middle">deur kap</text><text class="k-s" x="${xc+ca/2}" y="${Y-14}" text-anchor="middle">deur box</text>`;
+ } else {
+  const ya=Y+bx, yc=ya+rd, yb=yc+ca, rx=X+bx;
+  g+=`<rect class="k-cold" x="${X+bx}" y="${yc}" width="${bxW-2*bx}" height="${ca}"/>`;
+  for(const ry of [ya,yb])for(let c=0;c<cols;c++){const xx=rx+c*rw;
+   g+=`<rect class="k-rack" x="${xx}" y="${ry}" width="${rw}" height="${rd}"/><rect class="k-bak" x="${xx+rf}" y="${ry+rf}" width="${bw}" height="${bd}"/><text class="k-s" x="${xx+rw/2}" y="${ry+rd/2+8}" text-anchor="middle">${lev}× hoog</text>`}
+  g+=`<text class="k-c" x="${mx}" y="${yc+ca/2+10}" text-anchor="middle">KOUD ${ca}</text>`;
+  g+=arrow(X+bx+60,ya+20,X+bx+60,Y-80,'k-ah')+arrow(X+bx+60,yb+rd-20,X+bx+60,Y+bxH+80,'k-ah');
+  g+=`<line class="k-door" x1="${X}" y1="${yc+8}" x2="${X}" y2="${yc+ca-8}"/><text class="k-s" x="${X-14}" y="${yc+ca/2+8}" text-anchor="end">deur box</text>`;
+  g+=`<line class="k-door" x1="${mx-200}" y1="0" x2="${mx+200}" y2="0"/><text class="k-s" x="${mx}" y="-18" text-anchor="middle">deur kap</text>`;
+ }
+ g+=`<text class="k-h" x="${x0+40}" y="${y0+iW/2+10}">KAMER</text><text class="k-t" x="${mx}" y="${Y+bxH+40}" text-anchor="middle" style="font-size:24px">serverruimte (binnenbox) ${Math.round(bxW)} × ${Math.round(bxH)}</text>`;
+ // checks
+ const fits=bxW<=iL&&bxH<=iW;
+ ck.push([fits?'ok':'bad',`Binnenbox ${Math.round(bxW)} × ${Math.round(bxH)} mm in de kap van ${iL} × ${iW} mm.`]);
+ const crOk=2*cy<=iW&&2*cx<=iL;
+ ck.push([crOk?'ok':'bad',`4 CRAH's van ${cx} × ${cy} mm: tussen twee CRAH's aan dezelfde kopse kant blijft ${Math.round(iW-2*cy)} mm over.`]);
+ let dmin=1e9;
+ for(const [x,y] of cr){const dx=Math.max(X-(x+cx),x-(X+bxW),0),dy=Math.max(Y-(y+cy),y-(Y+bxH),0);const d=(dx>0&&dy>0)?Math.hypot(dx,dy):Math.max(dx,dy);const ov=dx===0&&dy===0;dmin=Math.min(dmin,ov?-1:d)}
+ ck.push([dmin>=hz?'ok':'bad',dmin<0?`De binnenbox overlapt een CRAH.`:`Kleinste afstand binnenbox ↔ CRAH: ${Math.round(dmin)} mm (min. ${hz}).`]);
+ const gx=(iL-bxW)/2, gy=(iW-bxH)/2;
+ ck.push([Math.min(gx,gy)>=Math.min(hz,100)?'ok':'bad',`Vrije ruimte rond de binnenbox: ${Math.round(gx)} mm aan de kopse kanten, ${Math.round(gy)} mm langs de lange zijden (warme lucht moet om de box heen naar de CRAH's).`]);
+ const H=DECK+FLOOR+lev*bh+RACKTOP;
+ ck.push([H<=mh?'ok':'bad',`Hoogte: dek ${DECK} + vloer ${FLOOR} + ${lev} × ${bh} + rekbovenkant ${RACKTOP} = ${H} mm (max. ${mh}). De kap komt daar nog bovenop.`]);
+ ck.push(['info',`${N} bakjes = 2 rekken × ${cols} kolom(men) × ${lev} hoog (${2*cols*lev} plaatsen).`]);
+ g+=`<line class="m-dim" x1="0" y1="${W+70}" x2="${L}" y2="${W+70}"/><text class="k-s" x="${L/2}" y="${W+105}" text-anchor="middle">2300 mm</text>`;
+ g+=`<line class="m-dim" x1="${L+40}" y1="0" x2="${L+40}" y2="${W}"/><text class="k-s" x="${L+75}" y="${W/2}" text-anchor="middle" transform="rotate(90 ${L+75} ${W/2})">980 mm</text>`;
+ $('topdraw').innerHTML=`<svg viewBox="-40 -60 2480 1190" role="img" aria-label="Bovenaanzicht kar op schaal">${g}</svg>`;
+ $('topchecks').innerHTML=ck.map(([k,t])=>`<li>${pill(k)}<span>${t}</span></li>`).join('');
+}
+function all(){bakje();top()}
+['b_d','b_f','b_p','o_or','o_n','o_bw','o_bh','o_rf','o_ca','o_bx','o_cw','o_cd','o_hz','o_kw','o_mh'].forEach(i=>$(i).addEventListener('input',all));
+all();
+})();
+</script>
+
+
+</body></html>
