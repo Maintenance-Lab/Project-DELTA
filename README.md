@@ -159,10 +159,6 @@ Zie ook het [overzicht van de hardwaremappen](hardware/).
 
 > Zet de status op ✅ (of 🟡) en vul de datum in zodra er een document in de map staat. Een map met alleen een README telt als ⬜.
 
-## Veiligheid
-
-De netzijde van de serverkar wordt aangesloten en gekeurd door een bevoegd persoon (NEN 3140). Werk niet aan de schakelkast als de kar onder spanning staat.
-
 ## Contact
 
 Projectleider HvA: a.van.schravendijk@hva.nl
