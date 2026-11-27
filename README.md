@@ -152,7 +152,7 @@ Zie ook het [overzicht van de hardwaremappen](hardware/).
 | Technische schema's (P&ID) | koelkar | [hardware/koelkar/technisch](hardware/koelkar/technisch/) | IJskoud | ⬜ | – |
 | Elektrische schema's | koelkar | [hardware/koelkar/elektrisch](hardware/koelkar/elektrisch/) | IJskoud | ⬜ | – |
 | Stuklijst stalen frames | beide | [hardware/karren-frame/bom](hardware/karren-frame/bom/) | HvA / ROC | ⬜ | – |
-| Ontwerp en tekeningen frames | beide | [hardware/karren-frame/tekeningen](hardware/karren-frame/tekeningen/) | HvA / ROC | ⬜ | – |
+| Ontwerp en tekeningen frames (serverkar: DATACENTER CAR) | beide | [hardware/karren-frame/tekeningen](hardware/karren-frame/tekeningen/) | HvA / ROC | 🟡 | 27-11-2026 |
 | Modelica-modellen | beide | [modelica/](modelica/) | Lucend | ⬜ | – |
 | Logo's partners | – | [docs/img/logos/](docs/img/logos/) | HvA | ⬜ | – |
 
