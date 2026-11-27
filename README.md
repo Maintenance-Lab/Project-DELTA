@@ -1,6 +1,6 @@
 <p align="center">
-  <img src="docs/img/logos/lucend.svg" alt="Lucend" height="40">&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="docs/img/logos/hva.png" alt="Hogeschool van Amsterdam" height="50">&nbsp;&nbsp;&nbsp;&nbsp;
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/img/logos/lucend-wit.svg"><img src="docs/img/logos/lucend.svg" alt="Lucend" height="40"></picture>&nbsp;&nbsp;&nbsp;&nbsp;
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/img/logos/hva-wit.png"><img src="docs/img/logos/hva.png" alt="Hogeschool van Amsterdam" height="50"></picture>&nbsp;&nbsp;&nbsp;&nbsp;
   <img src="docs/img/logos/ijskoud.png" alt="IJskoud" height="50">&nbsp;&nbsp;&nbsp;&nbsp;
   <img src="docs/img/logos/apac.png" alt="APAC" height="50">&nbsp;&nbsp;&nbsp;&nbsp;
   <img src="docs/img/logos/roc-van-amsterdam.png" alt="ROC van Amsterdam – MBO College West" height="50">

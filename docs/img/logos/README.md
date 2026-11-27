@@ -5,7 +5,9 @@ Logo's van de partijen, bijgesneden en met transparante achtergrond. Ze worden b
 | Bestand | Partij |
 |---|---|
 | `lucend.svg` | Lucend (penvoerder) |
+| `lucend-wit.svg` | Lucend, witte versie voor dark mode |
 | `hva.png` | Hogeschool van Amsterdam |
+| `hva-wit.png` | Hogeschool van Amsterdam, witte versie voor dark mode |
 | `ijskoud.png` | IJskoud |
 | `apac.png` | APAC |
 | `roc-van-amsterdam.png` | ROC van Amsterdam – MBO College West |
