@@ -1,12 +1,13 @@
 <p align="center">
-  <img src="docs/img/logos/lucend.png" alt="Lucend" height="60">&nbsp;&nbsp;&nbsp;
-  <img src="docs/img/logos/hva.png" alt="Hogeschool van Amsterdam" height="60">&nbsp;&nbsp;&nbsp;
-  <img src="docs/img/logos/ijskoud.png" alt="IJskoud" height="60">&nbsp;&nbsp;&nbsp;
-  <img src="docs/img/logos/roc-van-amsterdam.png" alt="ROC van Amsterdam" height="60">
+  <img src="docs/img/logos/lucend.svg" alt="Lucend" height="40">&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="docs/img/logos/hva.png" alt="Hogeschool van Amsterdam" height="50">&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="docs/img/logos/ijskoud.png" alt="IJskoud" height="50">&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="docs/img/logos/apac.png" alt="APAC" height="50">&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="docs/img/logos/roc-van-amsterdam.png" alt="ROC van Amsterdam – MBO College West" height="50">
 </p>
 <p align="center">
-  <img src="docs/img/logos/kansen-voor-west.png" alt="Kansen voor West" height="45">&nbsp;&nbsp;&nbsp;
-  <img src="docs/img/logos/efro-eu.png" alt="Medegefinancierd door de Europese Unie (EFRO)" height="45">
+  <img src="docs/img/logos/kansen-voor-west.svg" alt="Kansen voor West" height="45">&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="docs/img/logos/efro-eu.png" alt="Gefinancierd door de Europese Unie" height="45">
 </p>
 
 # DELTA – fysieke datacenter-testopstelling
@@ -154,7 +155,7 @@ Zie ook het [overzicht van de hardwaremappen](hardware/).
 | Stuklijst stalen frames | beide | [hardware/karren-frame/bom](hardware/karren-frame/bom/) | HvA / ROC | ⬜ | – |
 | Ontwerp en tekeningen frames (serverkar: DATACENTER CAR) | beide | [hardware/karren-frame/tekeningen](hardware/karren-frame/tekeningen/) | HvA / ROC | 🟡 | 27-11-2026 |
 | Modelica-modellen | beide | [modelica/](modelica/) | Lucend | ⬜ | – |
-| Logo's partners | – | [docs/img/logos/](docs/img/logos/) | HvA | ⬜ | – |
+| Logo's partners | – | [docs/img/logos/](docs/img/logos/) | HvA | ✅ | 27-11-2026 |
 
 > Zet de status op ✅ (of 🟡) en vul de datum in zodra er een document in de map staat. Een map met alleen een README telt als ⬜.
 

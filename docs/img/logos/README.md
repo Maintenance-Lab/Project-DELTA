@@ -1,10 +1,13 @@
 # Logo's
 
-Zet hier de logo's als PNG (liefst transparante achtergrond, ca. 200 px hoog). De README verwacht deze bestandsnamen:
+Logo's van de partijen, bijgesneden en met transparante achtergrond. Ze worden bovenaan de [README](../../../README.md) gebruikt.
 
-- `hva.png` – Hogeschool van Amsterdam
-- `lucend.png` – Lucend
-- `ijskoud.png` – IJskoud
-- `roc-van-amsterdam.png` – ROC van Amsterdam
-- `kansen-voor-west.png` – Kansen voor West
-- `efro-eu.png` – "Medegefinancierd door de Europese Unie" (verplicht bij publieke uitingen over het project)
+| Bestand | Partij |
+|---|---|
+| `lucend.svg` | Lucend (penvoerder) |
+| `hva.png` | Hogeschool van Amsterdam |
+| `ijskoud.png` | IJskoud |
+| `apac.png` | APAC |
+| `roc-van-amsterdam.png` | ROC van Amsterdam – MBO College West |
+| `kansen-voor-west.svg` | Kansen voor West |
+| `efro-eu.png` | "Gefinancierd door de Europese Unie" (verplicht bij publieke uitingen over het project) |
